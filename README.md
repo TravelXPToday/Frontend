@@ -8,4 +8,5 @@ Why we chose [Tailwind](https://tailwindcss.com)
 
 ### Components
 
+
 In react we work with components. This is because we want no overlapping code. We can re-use these components to avoid overlapping code.
