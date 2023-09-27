@@ -5,7 +5,7 @@ const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
   
     return (
-        <nav className="py-4 shadow-md border-b-4 bg-white border-teal-600 sticky top-0 z-20">
+        <nav className="py-4 shadow-md border-b-4 bg-white dark:bg-slate-900 border-teal-600 sticky top-0 z-20">
                 <div className="container mx-auto flex justify-between items-center">
                 <div className='flex justify-between items-center'>          
                     <img src={ImageLogo} alt="logo" className="h-16 w-16 rounded-full object-fill" /> 
@@ -20,9 +20,9 @@ const NavBar = () => {
                 <div className="md:hidden block py-4 px-6">
                     
                     <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none mr-5">
-                    <div className={`w-6 h-0.5 bg-black mb-1.5 transform transition-transform duration-200 ${isOpen ? "rotate-45 translate-y-2" : ""}`}></div>
-                    <div className={`w-6 h-0.5 bg-black mb-1.5 transform transition-opacity duration-300 ${isOpen ? "opacity-0" : ""}`}></div>
-                    <div className={`w-6 h-0.5 bg-black transform transition-transform duration-500 ${isOpen ? "-rotate-45 translate-y-[-10px]" : ""}`}></div>
+                    <div className={`w-6 h-0.5 bg-black mb-1.5 dark:bg-rose-500 transform transition-transform duration-200 ${isOpen ? "rotate-45 translate-y-2" : ""}`}></div>
+                    <div className={`w-6 h-0.5 bg-black mb-1.5 dark:bg-rose-500 transform transition-opacity duration-300 ${isOpen ? "opacity-0" : ""}`}></div>
+                    <div className={`w-6 h-0.5 bg-black transform dark:bg-rose-500 transition-transform duration-500 ${isOpen ? "-rotate-45 translate-y-[-10px]" : ""}`}></div>
 
                     </button>
                     

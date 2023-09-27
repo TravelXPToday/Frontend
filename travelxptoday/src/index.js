@@ -10,7 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
     
     <BrowserRouter>
-    <main className='bg-gradient-to-b from-teal-100/50 to-teal-700/50 min-h-fit lg:h-screen'>
+    <main className='bg-gradient-to-b from-teal-100/50 dark:from-teal-900 to-teal-700/50 dark:to-slate-900 min-h-fit lg:h-screen'>
       <NavBar />
       <Routes>
         <Route path="/" element={<WelcomePage />} />

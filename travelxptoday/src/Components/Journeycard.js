@@ -32,26 +32,26 @@ const JourneyCard = () => {
   return (
     <section className=" py-16">
       <div className="container mx-auto text-center ">
-        <h2 className="text-4xl font-semibold mb-8">My Most Recent Journeys</h2>
+        <h2 className="text-4xl font-semibold mb-8 dark:text-white">My Most Recent Journeys</h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:mx-10">
           {journeyData && journeyData.slice(0, 3).map((journey) => ( 
-            <div key={journey.id} className="bg-white rounded-lg shadow-md overflow-hidden lg:mx-8 sm:mx-4 shadow-rose-300">
-              <img
+            <div key={journey.id} className="flex flex-col bg-white dark:bg-slate-900 rounded-lg shadow-md dark:shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 shadow-rose-300 h-full">
+            <img
                 src={journey.image_url} 
                 alt={journey.name}
-                className="w-full  mb-4 h-48 overflow-hidden"
-              />
-              <div className="px-6 pt-4 pb-2"> 
-                <h3 className="text-gray-800 font-bold text-xl mb-2">{journey.name}</h3>
-                <p className="text-gray-700 text-base pb-4 border-b-2 border-rose-700">{journey.description}</p>
-              </div>
-              <p className="text-gray-700 text-base">Travelers: </p>
-              <div className="px-6 pt-4 pb-2"> 
-                {journey.travelers.map((traveler) => (
-                  <span className="inline-block bg-rose-500 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2" key={traveler.name}>{traveler.name}</span>
-                ))}
-              </div>
+                className="w-full mb-4 h-48 overflow-hidden"
+            />
+            <div className="px-6 pt-4 pb-2 flex-grow"> 
+                <h3 className="text-gray-800 dark:text-white font-bold text-xl mb-2">{journey.name}</h3>
+                <p className="text-gray-700 dark:text-gray-200 text-base">{journey.description}</p>
             </div>
+            <div className="px-6 pt-4 border-t-2 border-rose-700">
+                <p className="text-gray-700 dark:text-white text-base mb-2">Travelers: </p>
+                {journey.travelers.map((traveler) => (
+                    <span className="inline-block bg-rose-500 rounded-full px-3 mb-4 py-1 text-sm font-semibold text-white mr-2" key={traveler.name}>{traveler.name}</span>
+                ))}
+            </div>
+        </div>
           ))}
         </div>
       </div>
