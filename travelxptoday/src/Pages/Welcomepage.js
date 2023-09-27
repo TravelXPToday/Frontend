@@ -1,9 +1,11 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from "react-router-dom";
 import ImageLogo from '../Assets/Image/Logo.jfif';
 import bgImage from '../Assets/Image/Background.jpg';
 
 const WelcomePage = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="bg-gray-100 h-screen">
       
@@ -12,14 +14,47 @@ const WelcomePage = () => {
         <div className="container mx-auto flex justify-between items-center">
           <div className='flex justify-between items-center'>          
             <img src={ImageLogo} alt="logo" className="h-16 w-16 rounded-full object-fill" /> 
-            <a href="/" className="text-2xl font-semibold text-rose-500 hover:border-b-2 hover:border-rose-500  ">TravelXPToday</a>
+            <a href="/" className="text-2xl font-semibold text-rose-500 hover:border-b-2 hover:border-rose-500">TravelXPToday</a>
           </div>
-          <ul className="flex space-x-4">
-
+          <ul className="md:flex hidden space-x-4 mr- ">
             <li><a href="#" className="text-teal-600 hover:bg-rose-500 hover:text-white text-s font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg">Bestemmingen</a></li>
             <li><a href="#" className="text-teal-600 hover:bg-rose-500 hover:text-white text-s font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg">Blog</a></li>
-            <li><a href="#" className="text-teal-600 hover:bg-rose-500 hover:text-white text-s font-semibold py-2 px-2 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg">Contact</a></li>
+            <li><a href="#" className="text-teal-600 hover:bg-rose-500 hover:text-white text-s font-semibold py-2 px-2 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg mr-10">Contact</a></li>
           </ul>
+          {/* Burger Menu */}
+          <div className="md:hidden block py-4 px-6">
+            
+            <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none mr-5">
+              <div className={`w-6 h-0.5 bg-black mb-1.5 transform transition-transform duration-300 ${isOpen ? "rotate-45 translate-y-2" : ""}`}></div>
+              <div className={`w-6 h-0.5 bg-black mb-1.5 transform transition-transform duration-500 ${isOpen ? "opacity-0" : ""}`}></div>
+              <div className={`w-6 h-0.5 bg-black transform transition-transform duration-500 ${isOpen ? "-rotate-45 translate-y-[-10px]" : ""}`}></div>
+
+            </button>
+            
+
+            {isOpen && (
+              <div className="absolute top-9 left-0 w-full mt-16 bg-white shadow-lg rounded-md p-4 z-10">
+                <ul className="space-y-2">
+                  <li>
+                    <Link to="#" className="text-teal-600 hover:bg-rose-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
+                      Bestemmingen
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="#" className="text-teal-600 hover:bg-rose-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
+                      Blog
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="#" className="text-teal-600 hover:bg-rose-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
+                      Contact
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+
+          </div>
         </div>
       </nav>
 
