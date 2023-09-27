@@ -25,8 +25,8 @@ const WelcomePage = () => {
           <div className="md:hidden block py-4 px-6">
             
             <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none mr-5">
-              <div className={`w-6 h-0.5 bg-black mb-1.5 transform transition-transform duration-300 ${isOpen ? "rotate-45 translate-y-2" : ""}`}></div>
-              <div className={`w-6 h-0.5 bg-black mb-1.5 transform transition-transform duration-500 ${isOpen ? "opacity-0" : ""}`}></div>
+              <div className={`w-6 h-0.5 bg-black mb-1.5 transform transition-transform duration-200 ${isOpen ? "rotate-45 translate-y-2" : ""}`}></div>
+              <div className={`w-6 h-0.5 bg-black mb-1.5 transform transition-opacity duration-300 ${isOpen ? "opacity-0" : ""}`}></div>
               <div className={`w-6 h-0.5 bg-black transform transition-transform duration-500 ${isOpen ? "-rotate-45 translate-y-[-10px]" : ""}`}></div>
 
             </button>
