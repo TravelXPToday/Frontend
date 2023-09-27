@@ -5,7 +5,7 @@ import bgImage from '../Assets/Image/Background.jpg';
 import JourneyCard from '../Components/Journeycard';
 const WelcomePage = () => { 
   return (
-    <div className="bg-gray-100 h-screen">      
+    <div className=" ">      
       {/* Welkomstinhoud */}
       <div className="container mx-auto  bg-black p-16  text-white text-center"style={{
         backgroundImage: `url(${bgImage})` ,
@@ -13,7 +13,7 @@ const WelcomePage = () => {
         backgroundPosition: 'center'
         }} >
 
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center ">
           <div className="relative inline-block">
             <div className="absolute top-0 left-0 z-0 w-full h-full bg-black opacity-50 transform -skew-x-12">
               {/* This div creates the brush stroke effect */}
