@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
 import bgImage from '../Assets/Image/Background.jpg';
-import JourneyCard from '../Components/Journeycard';
+import JourneyCard from '../Components/JourneycardsWelcomepage';
 const WelcomePage = () => { 
   return (
     <div className=" ">      

@@ -1,3 +1,7 @@
+/*
+Component for displaying 3 most recent journeys.
+*/
+
 import React, { useEffect, useState } from "react";
 
 const JourneyCard = () => {
@@ -14,7 +18,6 @@ const JourneyCard = () => {
         return response.json();
       })
       .then((data) => {
-        // Sorting the data by end_date in descending order
         const sortedData = data.sort((a, b) => new Date(b.end_time) - new Date(a.end_time));
         console.log(sortedData);
         setJourneyData(sortedData);
