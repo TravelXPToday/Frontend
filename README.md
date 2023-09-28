@@ -2,6 +2,7 @@
 
 # Frontend
 
+
 ### Tailwind
 Why we chose [Tailwind](https://tailwindcss.com)
 - You can use pre-built CSS classes for styling, which saves you the time and effort of writing custom CSS from scratch
@@ -13,6 +14,15 @@ In react we work with components. This is because we want no overlapping code. W
 
 ### FetchAPI
 We use fetchAPI as our way to connect our frontend to our backend. 
+
+## What is FetchAPI?
+The Fetch API provides a JavaScript interface for accessing and manipulating parts of the protocol, such as requests and responses. It also provides a global fetch() method that provides an easy, logical way to fetch resources asynchronously across the network.
+
+Unlike XMLHttpRequest that is a callback-based API, Fetch is promise-based and provides a better alternative that can be easily used in service workers. Fetch also integrates advanced HTTP concepts such as CORS and other extensions to HTTP. (Using the Fetch API - Web APIs | MDN, 2023)[^1]
+
+## How we use FetchAPI
+
+We use FetchAPI to gather data from our backend to display at our frontend. In the codeblock you can see how we do this.
 ```javascript
 useEffect(() => {
     fetch("http://127.0.0.1:5000/journey/all")
@@ -33,3 +43,6 @@ useEffect(() => {
       });
   }, []);
 ```
+
+### Sources
+[^1]: Using the Fetch API - Web APIs | MDN. (2023, August 18). Retrieved September 22, 2023, from https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
