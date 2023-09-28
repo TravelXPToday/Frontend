@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-
+import ModalJourneyComponent from "./ModalJourneyComponent";
 const AllJourneyComponents = () => {
   const [journeyData, setJourneyData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);  // Added state for modal visibility
+
+  const toggleModal = () => setIsModalOpen(!isModalOpen);  // Function to toggle modal visibility
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/journey/all")
@@ -22,25 +25,50 @@ const AllJourneyComponents = () => {
         setError(error);
         setLoading(false);
       });
-  }, []);  
+  }, []);
+
+  const Modal = () => ( 
+    <div className="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+      <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div className="fixed inset-0 bg-teal-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div className="inline-block align-bottom bg-white border-4 border-pink-500 rounded-lg text-left overflow-hidden shadow-md shadow-teal-900 transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <ModalJourneyComponent toggleModal={toggleModal} />
+            
+          </div>
+          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button onClick={toggleModal} type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-pink-500 text-base font-medium text-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   if (loading) return <div className="flex justify-center items-center mt-10"><div className="animate-spin rounded-lg p-2 bg-pink-500 text-white text-2xl">Loading...</div></div>;
   if (error) return <div>Error: {error.message}</div>;
-  if (journeyData.length === 0) return <div>No journeys to display</div>;  // Handling case when no journeys are available
+  if (journeyData.length === 0) return <div>No journeys to display</div>;
 
   return (
     <section className="py-16">
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-semibold mb-8 text-white">All my Journeys</h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:mx-10">
+          <div className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full justify-center items-center">
+            <button onClick={toggleModal} className="bg-pink-500 m-6 text-white font-bold py-2 px-4 rounded-full border-2 animate-bounce">
+              Create New Journey
+            </button>
+          </div>
           {journeyData.map((journey) => (
             <div key={journey.id} className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full">
               <img
-                src={journey.image_url} 
-                alt={`Journey to ${journey.name}`}  // Made alt text more descriptive
+                src={journey.image_url}
+                alt={`Journey to ${journey.name}`}
                 className="w-full mb-4 h-48 overflow-hidden"
               />
-              <div className="px-6 pt-4 pb-2 flex-grow"> 
+              <div className="px-6 pt-4 pb-2 flex-grow">
                 <h3 className="text-white font-bold text-xl mb-2">{journey.name}</h3>
                 <p className="text-gray-200 text-base">{journey.description}</p>
               </div>
@@ -54,8 +82,9 @@ const AllJourneyComponents = () => {
           ))}
         </div>
       </div>
+      {isModalOpen && <Modal />}  {/* Conditionally render the modal based on the state */}
     </section>
   );
-}
+};
 
-export default AllJourneyComponents;
+export default AllJourneyComponents;  // Exporting the component
