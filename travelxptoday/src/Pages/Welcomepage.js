@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
 import bgImage from '../Assets/Image/Background.jpg';
-import JourneyCard from '../Components/JourneycardsWelcomepage';
+import JourneycardsWelcompage from '../Components/JourneycardsWelcomepage';
 const WelcomePage = () => { 
   return (
     <div className=" ">      
@@ -25,7 +25,7 @@ const WelcomePage = () => {
             </div>
           </div>
 
-          <button className="bg-rose-500 drop-shadow-lg mt-4 text-white hover:bg-white hover:text-rose-500 text-xl font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out">
+          <button className="bg-pink-500 drop-shadow-lg mt-4 text-white hover:bg-white hover:text-pink-500 text-xl font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out">
             <Link to="/journey"> Ga verder naar reizen </Link>
           </button>
         </div>
@@ -34,7 +34,7 @@ const WelcomePage = () => {
         
       </div>
 
-      <JourneyCard />
+      <JourneycardsWelcompage />
     </div>
   );
 }
