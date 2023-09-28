@@ -20,9 +20,9 @@ const NavBar = () => {
                 <div className="md:hidden block py-4 px-6">
                     
                     <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none mr-5">
-                    <div className={`w-6 h-0.5 bg-black mb-1.5 dark:bg-pink-500 transform transition-transform duration-200 ${isOpen ? "rotate-45 translate-y-2" : ""}`}></div>
-                    <div className={`w-6 h-0.5 bg-black mb-1.5 dark:bg-pink-500 transform transition-opacity duration-300 ${isOpen ? "opacity-0" : ""}`}></div>
-                    <div className={`w-6 h-0.5 bg-black transform dark:bg-pink-500 transition-transform duration-500 ${isOpen ? "-rotate-45 translate-y-[-10px]" : ""}`}></div>
+                    <div className={`w-6 h-0.5  mb-1.5 bg-pink-500 transform transition-transform duration-200 ${isOpen ? "rotate-45 translate-y-2" : ""}`}></div>
+                    <div className={`w-6 h-0.5  mb-1.5 bg-pink-500 transform transition-opacity duration-300 ${isOpen ? "opacity-0" : ""}`}></div>
+                    <div className={`w-6 h-0.5  transform bg-pink-500 transition-transform duration-500 ${isOpen ? "-rotate-45 translate-y-[-10px]" : ""}`}></div>
 
                     </button>
                     
@@ -31,17 +31,17 @@ const NavBar = () => {
                     <div className="absolute top-9 left-0 w-full mt-16 bg-white shadow-lg rounded-md p-4 z-10">
                         <ul className="space-y-2">
                         <li>
-                            <Link to="#" className="text-teal-600 hover:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
-                            Bestemmingen
+                            <Link to="/journey" className="text-teal-600  focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
+                            Journeys
                             </Link>
                         </li>
                         <li>
-                            <Link to="#" className="text-teal-600 hover:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
+                            <Link to="#" className="text-teal-600 hover:bg-pink-500  focus:text-white focus:rounded-full focus:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
                             Blog
                             </Link>
                         </li>
                         <li>
-                            <Link to="#" className="text-teal-600 hover:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
+                            <Link to="#" className="text-teal-600 hover:bg-pink-500  focus:text-white focus:rounded-full focus:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
                             Contact
                             </Link>
                         </li>
