@@ -6,11 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import AppJourney from './Pages/AppJourney';
 import WelcomePage from './Pages/Welcomepage';
 import NavBar from './Components/Navbar';
+import { ThemeProvider } from "@material-tailwind/react";
 ReactDOM.render(
   <React.StrictMode>
-    
+    <ThemeProvider>
     <BrowserRouter>
-    <main className='bg-gradient-to-b from-teal-100/50 dark:from-teal-900 to-teal-700/50 dark:to-slate-900 '>
+    <main className='bg-gradient-to-b from-teal-700 to-blue-gray-900 '>
       <NavBar />
       <Routes>
         <Route path="/" element={<WelcomePage />} />
@@ -18,6 +19,7 @@ ReactDOM.render(
       </Routes>
     </main>
     </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
