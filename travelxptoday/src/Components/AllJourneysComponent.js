@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ModalJourneyComponent from "./ModalJourneyComponent";
+import { Link } from "react-router-dom";
 const AllJourneyComponents = () => {
   const [journeyData, setJourneyData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -69,23 +70,25 @@ const AllJourneyComponents = () => {
         </button>
           </div>
           {journeyData.map((journey) => (
-            <div key={journey.id} className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full">
-              <img
-                src={journey.image_url}
-                alt={`Journey to ${journey.name}`}
-                className="w-full mb-4 h-48 overflow-hidden"
-              />
-              <div className="px-6 pt-4 pb-2 flex-grow">
-                <h3 className="text-white font-bold text-xl mb-2">{journey.name}</h3>
-                <p className="text-gray-200 text-base">{journey.description}</p>
+            <Link to={`/journey/${journey.id}`} className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-100" style={{ textDecoration: 'none' }}>
+              <div key={journey.id} className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full">
+                <img
+                  src={journey.image_url}
+                  alt={`Journey to ${journey.name}`}
+                  className="w-full mb-4 h-48 overflow-hidden"
+                />
+                <div className="px-6 pt-4 pb-2 flex-grow">
+                  <h3 className="text-white font-bold text-xl mb-2">{journey.name}</h3>
+                  <p className="text-gray-200 text-base">{journey.description}</p>
+                </div>
+                <div className="px-6 pt-4 border-t-2 border-pink-700">
+                  <p className="text-white text-base mb-2">Travelers: </p>
+                  {journey.travelers.map((traveler) => (
+                    <span className="inline-block bg-pink-500 rounded-full px-3 mb-4 py-1 text-sm font-semibold text-white  mr-2" key={traveler.name}>{traveler.name}</span>
+                  ))}
+                </div>
               </div>
-              <div className="px-6 pt-4 border-t-2 border-pink-700">
-                <p className="text-white text-base mb-2">Travelers: </p>
-                {journey.travelers.map((traveler) => (
-                  <span className="inline-block bg-pink-500 rounded-full px-3 mb-4 py-1 text-sm font-semibold text-white  mr-2" key={traveler.name}>{traveler.name}</span>
-                ))}
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

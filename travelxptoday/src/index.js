@@ -16,6 +16,7 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<WelcomePage />} />
         <Route path="/journey" element={<AppJourney />} />
+        <Route path="/journey:id" element={<h1>Not Found</h1>} />
       </Routes>
     </main>
     </BrowserRouter>
