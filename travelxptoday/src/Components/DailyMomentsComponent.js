@@ -4,18 +4,30 @@ Component for displaying caroussel for each daily moment.
 
 import React, { useEffect, useState } from "react";
 import { Stepper, Step, Button } from "@material-tailwind/react";
+import { HomeIcon, CheckIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { Progress, Typography } from "@material-tailwind/react";
 
 const DailyMomentsComponent = () => {
   const [journeyData, setJourneyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
-  const [isLastStep, setIsLastStep] = React.useState(false);
-  const [isFirstStep, setIsFirstStep] = React.useState(false);
+  const start_date = new Date('2023-09-01'); // Vervang dit door je eigen startdatum
+  const end_date = new Date('2023-09-30'); //TODO Vervang dit door je eigen einddatum
+  const current_date = new Date();
+  const total_duration = end_date - start_date;
+  const elapsed_duration = current_date - start_date;
+  const progress_percentage = (elapsed_duration / total_duration) * 100;
+  const rounded_percentage = Math.round(progress_percentage * 100) / 100;
+  let progress_message = '';
 
-  const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
-  const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
-
+  if (progress_percentage < 0) {
+    progress_message = 'De reis is nog niet begonnen!';
+  } else if (progress_percentage > 100) {
+    progress_message = 'De reis is voltooid!';
+  } else {
+    progress_message = `Je bent op ${rounded_percentage}% van je reis.`;
+  }
   useEffect(() => {
     fetch("http://127.0.0.1:5000/journey/all")
       .then((response) => {
@@ -25,7 +37,6 @@ const DailyMomentsComponent = () => {
         return response.json();
       })
       .then((data) => {
-        
         console.log(data);
         setJourneyData(data);
         setLoading(false);
@@ -47,32 +58,39 @@ const DailyMomentsComponent = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    
-    <div className="w-full py-4 px-8">
-      {journeyData.slice(0, 1).map((journey) =>
-      journey.days.map((day) => (
-        <div key={day.dayNumer} className="">
-          <p>{day.dayNumber}</p>
-          </div>
-      ))
-    )}
-      <Stepper
+    <div>
+      <div className="w-full py-4 px-8">
+        <Stepper 
+        key={journeyData.id} 
         activeStep={activeStep}
-        isLastStep={(value) => setIsLastStep(value)}
-        isFirstStep={(value) => setIsFirstStep(value)}
-      >
-        <Step onClick={() => setActiveStep(0)}>1</Step>
-        <Step onClick={() => setActiveStep(1)}>2</Step>
-        <Step onClick={() => setActiveStep(2)}>3</Step>
-        
-      </Stepper>
-      <div className="mt-16 flex justify-between">
-        <Button onClick={handlePrev} disabled={isFirstStep}>
-          Prev
-        </Button>
-        <Button onClick={handleNext} disabled={isLastStep}>
-          Next
-        </Button>
+        lineClassName="bg-white h-1.5"
+        >
+          <Step isActive={journeyData.start_time > Date.now()}>
+            <HomeIcon className="h-7 w-7" />
+          </Step>
+          <Step
+            isActive={
+              journeyData.start_time < Date.now() &&
+              journeyData.end_time > Date.now()
+            }
+          >
+            <PaperAirplaneIcon className="h-7 w-7" />
+          </Step>
+          <Step isActive={journeyData.start_time < Date.now()}>
+            <CheckIcon className="h-7 w-7" />
+          </Step>
+        </Stepper>
+      </div>
+      <div className="w-80% mx-10">
+        <div className="mb-2 flex items-center justify-between gap-4">
+          <Typography className="text-pink-500" variant="h6">
+            {progress_message}
+          </Typography>
+        </div>
+        <Progress value={rounded_percentage} type color="pink" />
+      </div>
+      <div>
+        <p>BjladjblJLBKJLKS</p>
       </div>
     </div>
   );
