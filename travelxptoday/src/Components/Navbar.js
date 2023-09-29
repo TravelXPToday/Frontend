@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import ImageLogo from '../Assets/Image/Logo.jfif';
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
-  
+    const handleLinkClick = () => {
+        setIsOpen(false);  // This will close the navbar when a link is clicked
+    };
     return (
         <nav className="py-4 shadow-md border-b-4 bg-slate-900 border-teal-600 sticky top-0 z-20">
                 <div className="container mx-auto flex justify-between items-center">
@@ -30,24 +32,36 @@ const NavBar = () => {
                     {isOpen && (
                     <div className="absolute top-9 left-0 w-full mt-16 bg-white shadow-lg rounded-md p-4 z-10">
                         <ul className="space-y-2">
-                        <li>
-                            <Link to="/journey" className="text-teal-600  focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
-                            Journeys
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="#" className="text-teal-600 hover:bg-pink-500  focus:text-white focus:rounded-full focus:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
-                            Blog
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="#" className="text-teal-600 hover:bg-pink-500  focus:text-white focus:rounded-full focus:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out">
-                            Contact
-                            </Link>
-                        </li>
+                            <li>
+                                <Link 
+                                    to="/journey" 
+                                    onClick={handleLinkClick}  // Added onClick event here
+                                    className="text-teal-600 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out"
+                                >
+                                    Journeys
+                                </Link>
+                            </li>
+                            <li>
+                                <Link 
+                                    to="#" 
+                                    onClick={handleLinkClick}  // Added onClick event here
+                                    className="text-teal-600 hover:bg-pink-500 focus:text-white focus:rounded-full focus:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out"
+                                >
+                                    Blog
+                                </Link>
+                            </li>
+                            <li>
+                                <Link 
+                                    to="#" 
+                                    onClick={handleLinkClick}  // Added onClick event here
+                                    className="text-teal-600 hover:bg-pink-500 focus:text-white focus:rounded-full focus:bg-pink-500 hover:text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 ease-in-out"
+                                >
+                                    Contact
+                                </Link>
+                            </li>
                         </ul>
                     </div>
-                    )}
+                )}
 
                 </div>
                 </div>
