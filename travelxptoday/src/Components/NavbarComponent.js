@@ -15,8 +15,8 @@ const NavBar = () => {
                 </div>
                 <ul className="md:flex hidden space-x-4 mr- ">
                     <li><Link to="/journey" className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg">Journeys</Link></li>
-                    <li><Link to="/"  className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg">Blog</Link></li>
-                    <li><Link to="/"  className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold py-2 px-2 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg mr-10">Contact</Link></li>
+                    <li><Link to="/traveler"  className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg">Me</Link></li>
+                    <li><Link to="/"  className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold py-2 px-2 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg mr-10">Friends</Link></li>
                 </ul>
                 {/* Burger Menu */}
                 <div className="md:hidden block py-4 px-6">

@@ -7,7 +7,8 @@ import {
     Textarea,
 } from "@material-tailwind/react";
 
-function ModalJourneyComponent() {
+function ModalJourneyComponent({  refresh }) {
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         startDate: '',
@@ -15,7 +16,16 @@ function ModalJourneyComponent() {
         destination: '',
         startLocation: '',
         description: '',
-        travelers: ['', ''], 
+        travelers: [
+          {
+            "name": "",
+            "email": "test@gmail"
+          },
+          {
+            "name": "",
+            "email": "Test@gmail.com"
+          }
+        ], 
         transportation: '',
         days: [
           {
@@ -38,26 +48,34 @@ function ModalJourneyComponent() {
       
     });
 
-    const [loading, setLoading] = useState(false);
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setFormData(prev => ({ ...prev, [name]: value }));
+    };  
+  
+    const handleTravelerChange = (index, value) => {
+      const newTravelers = [...formData.travelers];
+      newTravelers[index].name = value;  // Corrected this line
+      setFormData(prev => ({ ...prev, travelers: newTravelers }));
+    };
+    
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true); 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-        
-    // Type and value checking
     if (isNaN(Date.parse(formData.startDate)) || isNaN(Date.parse(formData.endDate))) {
-        console.error('Invalid date format');
-        alert('Invalid date format');
-        setLoading(false);
-        return;
+      console.error('Invalid date format');
+      alert('Invalid date format');
+      setLoading(false);
+      return;
     }
 
     if (new Date(formData.startDate) > new Date(formData.endDate)) {
-        console.error('End date must be after start date');
-        alert('End date must be after start date');
-        setLoading(false);
-        return;
+      console.error('End date must be after start date');
+      alert('End date must be after start date');
+      setLoading(false);
+      return;
     }
 
     if (typeof formData.destination !== 'string' || formData.destination.trim() === '') {
@@ -86,9 +104,15 @@ function ModalJourneyComponent() {
       return;
     }
 
-    if (!Array.isArray(formData.travelers) || formData.travelers.some(traveler => typeof traveler !== 'string' || traveler.trim() === '')) {
-      console.error('Travelers must be an array of non-empty strings');
-      alert('Travelers must be an array of non-empty strings');
+    if (!Array.isArray(formData.travelers) ||
+      formData.travelers.some(traveler =>
+        typeof traveler.name !== 'string' ||
+        traveler.name.trim() === '' ||
+        typeof traveler.email !== 'string' ||
+        traveler.email.trim() === ''
+      )) {
+      console.error('Each traveler must have a non-empty name and email');
+      alert('Each traveler must have a non-empty name and email');
       setLoading(false);
       return;
     }
@@ -132,17 +156,7 @@ function ModalJourneyComponent() {
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
 
-
-  const handleTravelerChange = (index, value) => {
-    const newTravelers = [...formData.travelers];
-    newTravelers[index] = value;
-    setFormData(prev => ({ ...prev, travelers: newTravelers }));
-  };
 
   return (
     <div >
@@ -231,10 +245,10 @@ function ModalJourneyComponent() {
             <div className='flex  gap-x-2 flex-wrap items-center md:w-full'>
               <Input
                 key={index}
-                className='focus:bg-teal-100  '
+                className='focus:bg-teal-100'
                 size="lg"
                 label={`Traveler ${index + 1}`}
-                value={traveler}
+                value={traveler.name}  
                 onChange={(e) => handleTravelerChange(index, e.target.value)}
                 required
               />
@@ -242,15 +256,19 @@ function ModalJourneyComponent() {
           ))}
         </div>
 
-        <Button
+        <Button 
           type="submit"
-          className="mt-6 bg-pink-500 hover:text-pink-500 hover:bg-white transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+          className="mt-6 bg-pink-500 rounded-full text-white p-2 hover:border-1 hover:border-pink-500 hover:text-white hover:bg-teal-900 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
           fullWidth
+          onClick={() => {        
+            refresh();
+          }}
         >
           Create Journey
         </Button>
       </form>
     </div>
+    
 
   );
 }

@@ -5,10 +5,14 @@ const AllJourneyComponents = () => {
   const [journeyData, setJourneyData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);  // Added state for modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false); 
 
-  const toggleModal = () => setIsModalOpen(!isModalOpen);  // Function to toggle modal visibility
-
+  const toggleModal = () => setIsModalOpen(!isModalOpen);  
+  const refresh = () => {
+    setTimeout(() => {
+      window.location.reload();
+    }, 200);  
+  }; 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/journey/all")
       .then((response) => {
@@ -36,7 +40,7 @@ const AllJourneyComponents = () => {
         <div className="inline-block align-bottom bg-white border-4 border-pink-500 rounded-lg text-left overflow-hidden shadow-md shadow-teal-900 transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             
-            <ModalJourneyComponent toggleModal={toggleModal} />
+            <ModalJourneyComponent toggleModal={toggleModal} refresh={refresh} />
             
           </div>
           <div className=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
@@ -64,13 +68,13 @@ const AllJourneyComponents = () => {
           </button>
           <button 
             onClick={toggleModal} 
-            className="fixed bottom-8 right-8 bg-pink-500 text-white font-bold py-2 px-4 rounded-full border-2 z-50 animate-pulse"
+            className="fixed bottom-8 right-8 bg-pink-500 text-white font-bold py-2 px-4 rounded-full border-2 z-10 animate-pulse"
         >
              New
         </button>
           </div>
           {journeyData.map((journey) => (
-            <Link to={`/journey/${journey.id}`} className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-100" style={{ textDecoration: 'none' }}>
+            <Link to={`/journey/${journey.id}`} className="transition ease-in-out delay-150 hover:-translate-y-1 md:hover:scale-110 hover:scale-y-110 duration-100" style={{ textDecoration: 'none' }}>
               <div key={journey.id} className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full">
                 <img
                   src={journey.image_url}
