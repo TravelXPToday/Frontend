@@ -28,17 +28,18 @@ const AllJourneyComponents = () => {
   }, []);
 
   const Modal = () => ( 
-    <div className="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div className="fixed z-20 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div className="fixed inset-0 bg-teal-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <div className="fixed inset-0 bg-gradient-to-b from-teal-700 to-blue-gray-900 transition-opacity ease-in-out delay-150" aria-hidden="true"></div>
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         <div className="inline-block align-bottom bg-white border-4 border-pink-500 rounded-lg text-left overflow-hidden shadow-md shadow-teal-900 transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            
             <ModalJourneyComponent toggleModal={toggleModal} />
             
           </div>
-          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-            <button onClick={toggleModal} type="button" className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-pink-500 text-base font-medium text-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+          <div className=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button onClick={toggleModal} type="button" className="mt-3 w-full  inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-pink-500 text-base font-medium text-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm hover:text-pink-500 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
               Close
             </button>
           </div>
@@ -57,9 +58,15 @@ const AllJourneyComponents = () => {
         <h2 className="text-4xl font-semibold mb-8 text-white">All my Journeys</h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:mx-10">
           <div className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full justify-center items-center">
-            <button onClick={toggleModal} className="bg-pink-500 m-6 text-white font-bold py-2 px-4 rounded-full border-2 animate-bounce">
-              Create New Journey
-            </button>
+          <button onClick={toggleModal} className="bg-pink-500 m-6 sticky  top-[80px] text-white font-bold py-2 px-4 rounded-full border-2 animate-pulse">
+            Create New Journey
+          </button>
+          <button 
+            onClick={toggleModal} 
+            className="fixed bottom-8 right-8 bg-pink-500 text-white font-bold py-2 px-4 rounded-full border-2 z-50 animate-pulse"
+        >
+             New
+        </button>
           </div>
           {journeyData.map((journey) => (
             <div key={journey.id} className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full">
@@ -75,16 +82,16 @@ const AllJourneyComponents = () => {
               <div className="px-6 pt-4 border-t-2 border-pink-700">
                 <p className="text-white text-base mb-2">Travelers: </p>
                 {journey.travelers.map((traveler) => (
-                  <span className="inline-block bg-pink-500 rounded-full px-3 mb-4 py-1 text-sm font-semibold text-white mr-2" key={traveler.name}>{traveler.name}</span>
+                  <span className="inline-block bg-pink-500 rounded-full px-3 mb-4 py-1 text-sm font-semibold text-white  mr-2" key={traveler.name}>{traveler.name}</span>
                 ))}
               </div>
             </div>
           ))}
         </div>
       </div>
-      {isModalOpen && <Modal />}  {/* Conditionally render the modal based on the state */}
+      {isModalOpen && <Modal />}  
     </section>
   );
 };
 
-export default AllJourneyComponents;  // Exporting the component
+export default AllJourneyComponents;  
