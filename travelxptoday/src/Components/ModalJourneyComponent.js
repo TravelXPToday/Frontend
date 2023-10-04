@@ -141,7 +141,7 @@ function ModalJourneyComponent({  refresh }) {
 
         const responseBody = await response.json();
         console.log('Response:', responseBody);
-
+        refresh();
       } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
 
@@ -235,7 +235,7 @@ function ModalJourneyComponent({  refresh }) {
               label="Description"
               name="description"
               onChange={handleInputChange}
-              required
+              
             />
           </div>
         </div>
@@ -260,9 +260,7 @@ function ModalJourneyComponent({  refresh }) {
           type="submit"
           className="mt-6 bg-pink-500 rounded-full text-white p-2 hover:border-1 hover:border-pink-500 hover:text-white hover:bg-teal-900 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
           fullWidth
-          onClick={() => {        
-            refresh();
-          }}
+          
         >
           Create Journey
         </Button>

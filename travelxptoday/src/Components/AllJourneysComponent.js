@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ModalJourneyComponent from "./ModalJourneyComponent";
 import { Link } from "react-router-dom";
+import { motion, useScroll } from "framer-motion"
+
 const AllJourneyComponents = () => {
   const [journeyData, setJourneyData] = useState([]);
   const [loading, setLoading] = useState(true);
