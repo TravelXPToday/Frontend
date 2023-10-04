@@ -13,7 +13,7 @@ import TravelerPage from './Pages/TravelerPage';
   <React.StrictMode>
     <ThemeProvider>
     <BrowserRouter>
-    <main className='bg-gradient-to-b from-teal-700 to-blue-gray-900 '>
+    <main className='bg-gradient-to-b from-teal-900 to-blue-gray-900 '>
       <NavBar />
       <Routes>
         <Route path="/" element={<WelcomePage />} />
