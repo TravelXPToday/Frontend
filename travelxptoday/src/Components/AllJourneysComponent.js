@@ -82,7 +82,7 @@ const AllJourneyComponents = () => {
                 <img
                   src={journey.image_url}
                   alt={`Journey to ${journey.name}`}
-                  className="w-full mb-4 h-48 overflow-hidden"
+                  className="w-full mb-4 h-48 overflow-hidden object-cover"
                 />
                 <div className="px-6 pt-4 pb-2 flex-grow">
                   <h3 className="text-white font-bold text-xl mb-2">{journey.name}</h3>
