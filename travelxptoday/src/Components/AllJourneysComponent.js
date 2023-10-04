@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ModalJourneyComponent from "./ModalJourneyComponent";
 import { Link } from "react-router-dom";
 import { motion, useScroll } from "framer-motion"
+import ScrollComponent from "./ScrollComponent";
 
 const AllJourneyComponents = () => {
   const [journeyData, setJourneyData] = useState([]);
@@ -62,6 +63,7 @@ const AllJourneyComponents = () => {
 
   return (
     <section className="py-16">
+      <ScrollComponent />
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-semibold mb-8 text-white">All my Journeys</h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:mx-10">
