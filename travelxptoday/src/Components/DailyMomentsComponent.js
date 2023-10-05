@@ -62,11 +62,11 @@ const DailyMomentsComponent = () => {
         const newDate = moment(current_date).format('YYYY-MM-DD') //TODO
         setDate(newDate);
         if (data.start_time > currentDate) {
-          setActiveStep(0); // Stel activeStep in op 0 als journey nog niet is begonnen
+          setActiveStep(0); 
         } else if (data.start_time <= currentDate && data.end_time > currentDate) {
-          setActiveStep(1); // Stel activeStep in op 1 als journey aan de gang is
+          setActiveStep(1); 
         } else {
-          setActiveStep(2); // Stel activeStep in op 2 als journey is voltooid
+          setActiveStep(2);
         }
         console.log(currentDate, data.start_time, data.end_time)
         console.log(new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit'}).format(current_date));
