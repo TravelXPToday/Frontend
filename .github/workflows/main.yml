@@ -2,9 +2,13 @@ name: TravelXPtoday CI
 
 on:
   push:
-    branches: [main]
+    branches: 
+    - main
+    - DEV
   pull_request:
-    branches: [main]
+    branches: 
+    - main
+    - DEV
 
 jobs:
   build-and-test:
