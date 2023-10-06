@@ -20,6 +20,19 @@ The Fetch API provides a JavaScript interface for accessing and manipulating par
 
 Unlike XMLHttpRequest that is a callback-based API, Fetch is promise-based and provides a better alternative that can be easily used in service workers. Fetch also integrates advanced HTTP concepts such as CORS and other extensions to HTTP. (Using the Fetch API - Web APIs | MDN, 2023)[^1]
 
+### how to start the program
+To run the React app, run the following commands in the terminal:
+```bash
+cd TravelXPToday
+npm install
+npm start
+```
+To run the Flask app, run the following commands in the terminal:
+```bash
+cd API
+pip install -r requirements.txt
+python app.py
+```
 ## How we use FetchAPI
 
 We use FetchAPI to gather data from our backend to display at our frontend. In the codeblock you can see how we do this.
