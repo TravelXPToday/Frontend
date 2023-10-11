@@ -32,8 +32,8 @@ jobs:
       run: echo 'export NODE_PATH=./node_modules' >> $GITHUB_ENV
 
     - name: Install dependencies
-      run: cd Frontend/travelxptoday && npm ci
-      working-directory: frontend/travelxptoday
+      run: npm ci
+      working-directory: travelxptoday
 
     - name: Build
       run: cd Frontend/travelxptoday && npm run build --if-present
