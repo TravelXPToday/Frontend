@@ -36,7 +36,9 @@ jobs:
       working-directory: travelxptoday
 
     - name: Build
-      run: cd Frontend/travelxptoday && npm run build --if-present
+      run: npm run build --if-present
+      working-directory: travelxptoday
 
     - name: Test
-      run: cd Frontend/travelxptoday && npm test
+      run: npm test
+      working-directory: travelxptoday
