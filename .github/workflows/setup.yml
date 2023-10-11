@@ -28,18 +28,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Set NODE_PATH
-      run: echo 'export NODE_PATH=./node_modules' >> $GITHUB_ENV
-      
-    - name: Set CI to false
-      run: echo "CI=false" >> $GITHUB_ENV
-
+   
     - name: Install dependencies
       run: npm ci
       working-directory: travelxptoday
 
     - name: Build
-      run: npm run build --if-present
+      run: CI=false npm run build --if-present
       working-directory: travelxptoday
 
     - name: Test
