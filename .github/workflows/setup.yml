@@ -20,6 +20,14 @@ jobs:
         node-version: [lts/*]
 
     steps:
+    - name: Cache npm modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-
+    
     - name: Check out code
       uses: actions/checkout@v3
 
