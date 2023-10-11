@@ -30,7 +30,7 @@ jobs:
         cache: 'npm'
 
     - name: Change directory to Frontend/travelxptoday
-      run: cd Frontend/travelxptoday
+      run: cd travelxptoday
 
     - name: Install dependencies
       run: npm ci
