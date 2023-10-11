@@ -29,14 +29,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
-    - name: Change directory to Frontend/travelxptoday
-      run: cd travelxptoday
-
     - name: Install dependencies
-      run: npm ci
+      run: cd Frontend/travelxptoday && npm ci
 
     - name: Build
-      run: npm run build --if-present
+      run: cd Frontend/travelxptoday && npm run build --if-present
 
     - name: Test
-      run: npm test
+      run: cd Frontend/travelxptoday && npm test
