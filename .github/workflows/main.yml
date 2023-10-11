@@ -1,0 +1,56 @@
+# name: TravelXPtoday CI
+
+# on:
+#   push:
+#     branches: 
+#     - main
+#     - DEV
+#   pull_request:
+#     branches: 
+#     - main
+#     - DEV
+
+# jobs:
+#   build-and-test:
+#     name: Build and Test
+#     runs-on: ubuntu-latest
+    
+#     strategy:
+#       matrix:
+#         node-version: [14.x, 16.x, 18.x]
+
+#     steps:
+#     - name: Checkout Code
+#       uses: actions/checkout@v3
+
+#     - name: Set Up Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v3
+#       with:
+#         node-version: ${{ matrix.node-version }}
+    
+#     - name: Cache Dependencies
+#       uses: actions/cache@v3
+#       with:
+#         path: ~/.npm
+#         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+#         restore-keys: |
+#           ${{ runner.os }}-node-      
+
+#     - name: Install Dependencies
+#       run: npm ci
+#       working-directory: frontend/travelxptoday  
+
+#     - name: Build Project
+#       run: npm run build
+#       working-directory: frontend/travelxptoday 
+
+#     - name: Run Tests
+#       run: npm test
+#       working-directory: frontend/travelxptoday 
+
+#     - name: Upload Build Artifacts
+#       if: success()
+#       uses: actions/upload-artifact@v2
+#       with:
+#         name: build-artifacts
+#         path: frontend/travelxptoday/build/

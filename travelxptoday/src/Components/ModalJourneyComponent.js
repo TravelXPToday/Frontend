@@ -124,7 +124,7 @@ function ModalJourneyComponent({  refresh }) {
       return;
     }
     if (formData.startDate && formData.endDate && formData.destination && formData.startLocation && formData.description) {
-      console.log('Form data is valid:', formData);
+      
 
       try {
         const response = await fetch('http://127.0.0.1:5000/journey', {
@@ -140,17 +140,14 @@ function ModalJourneyComponent({  refresh }) {
         }
 
         const responseBody = await response.json();
-        console.log('Response:', responseBody);
         refresh();
       } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
 
       } finally {
         setLoading(false);
 
       }
     } else {
-      console.log('Please fill in all required fields.');
       setLoading(false);
 
     }
@@ -180,6 +177,7 @@ function ModalJourneyComponent({  refresh }) {
               name="name"
               onChange={handleInputChange}
               required
+              data-testid="name"
             />
           </div>
           <div className="flex mb-2  w-full gap-2 flex-wrap">
