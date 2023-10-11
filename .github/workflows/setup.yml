@@ -1,0 +1,50 @@
+name: Running Create React App and Tests
+
+on:
+  push:
+    branches:
+      - main
+      - DEV
+  pull_request:
+    branches:
+      - main
+      - DEV
+
+jobs:
+  build:
+    
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [lts/*]
+
+    steps:
+    - name: Cache npm modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-
+    
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+   
+    - name: Install dependencies
+      run: npm ci
+      working-directory: travelxptoday
+
+    - name: Build
+      run: npm run build --if-present
+      working-directory: travelxptoday
+
+    - name: Test
+      run: npm test -- --coverage
+      working-directory: travelxptoday
