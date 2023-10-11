@@ -34,7 +34,7 @@ jobs:
       working-directory: travelxptoday
 
     - name: Build
-      run: CI=false npm run build --if-present
+      run: process.env.CI = false npm run build --if-present
       working-directory: travelxptoday
 
     - name: Test
