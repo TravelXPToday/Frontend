@@ -139,7 +139,7 @@ function ModalJourneyComponent({  refresh }) {
           throw new Error('Network response was not ok ' + response.statusText);
         }
 
-        const responseBody = await response.json();
+        
         refresh();
       } catch (error) {
 

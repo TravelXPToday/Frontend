@@ -2,8 +2,8 @@
 Component for displaying caroussel for each daily moment.
 */
 
-import React, { useEffect, useState } from "react";
-import { Stepper, Step, Button } from "@material-tailwind/react";
+import React, { useEffect, useState, useMemo } from "react";
+import { Stepper, Step} from "@material-tailwind/react";
 import { HomeIcon, CheckIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { Progress, Typography } from "@material-tailwind/react";
 import { useParams } from "react-router-dom";
@@ -18,7 +18,7 @@ const DailyMomentsComponent = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [start_date, setStartDate] = useState(null); 
   const [end_date, setEndDate] = useState(null); 
-  const current_date = new Date();
+  const current_date = useMemo(() => new Date(), []); //Control klik op date en dan zie je locale date, nog naar kijken
   const total_duration = end_date - start_date;
   const elapsed_duration = current_date - start_date;
   const progress_percentage = (elapsed_duration / total_duration) * 100;
@@ -77,7 +77,7 @@ const DailyMomentsComponent = () => {
         setLoading(false);
       });
 
-  }, [] );
+  }, [URL, currentDate, current_date] );
 
   if (loading)
     return (
