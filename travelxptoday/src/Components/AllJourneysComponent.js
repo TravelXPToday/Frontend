@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ModalJourneyComponent from "./ModalJourneyComponent";
 import { Link } from "react-router-dom";
-import { motion, useScroll } from "framer-motion"
 import ScrollComponent from "./ScrollComponent";
 
 const AllJourneyComponents = () => {
