@@ -4,9 +4,9 @@ import WelcomePage from "../Pages/Welcomepage";
 import NavBar from "../Components/NavbarComponent";
 import '@testing-library/jest-dom';
 
-describe("Navigation", () => {
+describe("Welcome page tests", () => {
 beforeEach(() => {
-    document.body.innerHTML = ""; // Clean up the document body
+    document.body.innerHTML = "";
 });
 
 it("Journey button should navigate to the journeys page when clicked", async () => {
@@ -26,7 +26,7 @@ it("Journey button should navigate to the journeys page when clicked", async () 
     });
 });
 
-it("Navbar Journey Button should navigate to the journeys page when clicked", async () => {
+it("Navbar journey button should navigate to the journeys page when clicked", async () => {
     render(
         <Router>
             <NavBar />

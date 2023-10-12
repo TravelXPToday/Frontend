@@ -78,11 +78,9 @@ const AllJourneyComponents = () => {
         </button>
           </div>
           {journeyData.map((journey) => (
-            <Link to={`/journey/${journey._id}`} className="transition ease-in-out delay-150 hover:-translate-y-1 md:hover:scale-110 hover:scale-y-110 duration-100" style={{ textDecoration: 'none' }}
-            
-            >
-              <div key={journey.id} className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full">
-                <img
+             <Link to={`/journey/${journey._id}`} className="transition ease-in-out delay-150 hover:-translate-y-1 md:hover:scale-110 hover:scale-y-110 duration-100" style={{ textDecoration: 'none' }}>
+             <div key={journey._id} className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full">
+              <img
                   src={journey.image_url}
                   alt={`Journey to ${journey.name}`}
                   className="w-full mb-4 h-48 overflow-hidden object-cover"
