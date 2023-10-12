@@ -16,7 +16,7 @@ import TravelerPage from './Pages/TravelerPage';
     <main className='bg-gradient-to-b from-teal-900 to-blue-gray-900 '>
       <NavBar />
       <Routes>
-        <Route path="/" element={<WelcomePage />} />
+        <Route path="/welcomepage" element={<WelcomePage />} />
         <Route path="/journey" element={<AppJourney />} />
         <Route path="/journey/:id" element={<DailyMomentsPage/>} />
         <Route path='/traveler' element={<TravelerPage/>} />
