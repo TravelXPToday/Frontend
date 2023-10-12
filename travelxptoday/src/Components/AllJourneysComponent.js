@@ -27,6 +27,7 @@ const AllJourneyComponents = () => {
         const sortedData = data.sort((a, b) => new Date(b.end_time) - new Date(a.end_time));
         setJourneyData(sortedData);
         setLoading(false);
+        console.log(data)
       })
       .catch((error) => {
         setError(error);
@@ -58,7 +59,27 @@ const AllJourneyComponents = () => {
 
   if (loading) return <div className="flex justify-center items-center mt-10"><div className="animate-spin rounded-lg p-2 bg-pink-500 text-white text-2xl">Loading...</div></div>;
   if (error) return <div>Error: {error.message}</div>;
-  if (journeyData.length === 0) return <div>No journeys to display</div>;
+  if (journeyData.length === 0) return <div><section className="py-16">
+  <ScrollComponent />
+  <div className="container mx-auto text-center">
+    <h2 className="text-4xl font-semibold mb-8 text-white">All my Journeys</h2>
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:mx-10">
+      <div className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full justify-center items-center">
+      <button data-testid="createbutton" onClick={toggleModal} className="bg-pink-500 m-6 sticky  top-[80px] text-white font-bold py-2 px-4 rounded-full border-2 animate-pulse">
+        Create New Journey
+      </button>
+      <button 
+        onClick={toggleModal} 
+        className="fixed bottom-8 right-8 bg-pink-500 text-white font-bold py-2 px-4 rounded-full border-2 z-10 animate-pulse"
+    >
+         New
+    </button>
+      </div>
+        No journeys to display
+    </div>
+  </div>
+  {isModalOpen && <Modal />}  
+</section></div>;
 
   return (
     <section className="py-16">
@@ -67,7 +88,7 @@ const AllJourneyComponents = () => {
         <h2 className="text-4xl font-semibold mb-8 text-white">All my Journeys</h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:mx-10">
           <div className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full justify-center items-center">
-          <button onClick={toggleModal} className="bg-pink-500 m-6 sticky  top-[80px] text-white font-bold py-2 px-4 rounded-full border-2 animate-pulse">
+          <button data-testid="createbutton" onClick={toggleModal} className="bg-pink-500 m-6 sticky  top-[80px] text-white font-bold py-2 px-4 rounded-full border-2 animate-pulse">
             Create New Journey
           </button>
           <button 
@@ -76,9 +97,11 @@ const AllJourneyComponents = () => {
         >
              New
         </button>
-          </div>
+          </div >
+
           {journeyData.map((journey) => (
-             <Link to={`/journey/${journey._id}`} className="transition ease-in-out delay-150 hover:-translate-y-1 md:hover:scale-110 hover:scale-y-110 duration-100" style={{ textDecoration: 'none' }}>
+            
+             <Link  to={`/journey/${journey._id}`} className="transition ease-in-out delay-150 hover:-translate-y-1 md:hover:scale-110 hover:scale-y-110 duration-100" style={{ textDecoration: 'none' }}>
              <div key={journey._id} className="flex flex-col bg-slate-900 rounded-lg shadow-md shadow-teal-300 overflow-hidden lg:mx-8 sm:mx-4 h-full">
               <img
                   src={journey.image_url}
@@ -98,8 +121,10 @@ const AllJourneyComponents = () => {
               </div>
             </Link>
           ))}
+
         </div>
       </div>
+      
       {isModalOpen && <Modal />}  
     </section>
   );
