@@ -3,17 +3,20 @@ import { BrowserRouter as Router } from "react-router-dom";
 import NavBar from "../Components/NavbarComponent";
 import '@testing-library/jest-dom';
 
+function renderNavbar() {
+    render(
+        <Router>
+            <NavBar />
+        </Router>
+    );
+}
 
 beforeEach(() => {
     document.body.innerHTML = "";
 });
 
 it("Navbar journey button should navigate to the journeys page when clicked", async () => {
-    render(
-        <Router>
-            <NavBar />
-        </Router>
-    );
+    renderNavbar();
 
     const journeyLi = screen.getByTestId("JourneyLi");
 
@@ -25,11 +28,7 @@ it("Navbar journey button should navigate to the journeys page when clicked", as
 })
 
 it("Navbar welcome button should navigate to the welcome page when clicked", async () => {
-    render(
-        <Router>
-            <NavBar />
-        </Router>
-    );
+    renderNavbar();
 
     const homeButton = screen.getByTestId("ImageToWelcomePage");
 
@@ -40,11 +39,7 @@ it("Navbar welcome button should navigate to the welcome page when clicked", asy
     });
 })
 it("Navbar typewriter button should navigate to the welcome page when clicked", async () => {
-    render(
-        <Router>
-            <NavBar />
-        </Router>
-    );
+    renderNavbar();
 
     const homeButton = screen.getByTestId("TypeWriterButtonToWelcomePage");
 
@@ -56,11 +51,7 @@ it("Navbar typewriter button should navigate to the welcome page when clicked", 
 })
 
 it("Navbar hamburger journeybutton should navigate to the journeys page when clicked", async () => {
-    render(
-        <Router>
-            <NavBar />
-        </Router>
-    );
+    renderNavbar();
     const hamburgerButton = screen.getByTestId("HamburgerButton");
     fireEvent.click(hamburgerButton);
 
