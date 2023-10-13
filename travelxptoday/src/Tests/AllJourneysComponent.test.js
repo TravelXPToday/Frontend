@@ -1,51 +1,72 @@
 
-  import React from "react";
-  import { render, screen} from "@testing-library/react"; 
-  import AllJourneysComponent from "../Components/AllJourneysComponent";
+import React from "react";
+import { render, screen, fireEvent, waitFor, within } from "@testing-library/react";
+import AllJourneysComponent, { refresh } from "../Components/AllJourneysComponent";
 import { BrowserRouter } from "react-router-dom";
 
 
-  beforeEach(() => {
-    global.fetch = jest.fn(() => Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve([])
-    }));
-  });
-  
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
+beforeEach(() => {
+  global.fetch = jest.fn(() => Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve([])
+  }));
+});
 
+afterEach(() => {
+  jest.restoreAllMocks();
+});
 
-  
-  
-  it('displays loading state initially', () => {
-    render(<AllJourneysComponent />);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-  });
-  
-  it('displays error message when fetch call fails', async () => {
-    jest.spyOn(global, 'fetch').mockImplementation(() => Promise.reject('API is down'));
-    render(<AllJourneysComponent />);
-    await screen.findByText('Error:');
-  });
-  
-  it('displays no journeys message when there are no journeys to display', async () => {
-    render(<AllJourneysComponent />);
-    await screen.findByText('No journeys to display');
-  });
-  
-  it('renders the create new journey button', async () => {
-    render(<AllJourneysComponent />);
-    const button = await screen.findByText('Create New Journey');
-    expect(button).toBeInTheDocument();
-  });
-  
-  it('renders the fixed bottom right button with text New', async () => {
-    render(<AllJourneysComponent />);
-    const button = await screen.findByText('New');
-    expect(button).toBeInTheDocument();
-  });
+it('should refresh the page after 200ms', () => {
+  jest.useFakeTimers();
+  const { location } = window;
+  delete window.location;
+  window.location = { ...location, reload: jest.fn() };
+  render(<AllJourneysComponent />);
+  refresh();
+  jest.advanceTimersByTime(200);
+  expect(window.location.reload).toHaveBeenCalled();
+  window.location = location; 
+});
+
+it('opens the modal when the "New" button is clicked', async () => {
+  render(<AllJourneysComponent />);
+  const newButton = await screen.findByText('New');
+  fireEvent.click(newButton);
+
+  const modal = screen.getByTestId('modal');
+  expect(modal).toBeInTheDocument();
+
+  const modalTitle = within(modal).getByText('Create Journey');
+  expect(modalTitle).toBeInTheDocument();
+});
+
+it('displays loading state initially', () => {
+  render(<AllJourneysComponent />);
+  expect(screen.getByText('Loading...')).toBeInTheDocument();
+});
+
+it('displays error message when fetch call fails', async () => {
+  jest.spyOn(global, 'fetch').mockImplementation(() => Promise.reject('API is down'));
+  render(<AllJourneysComponent />);
+  await screen.findByText('Error:');
+});
+
+it('displays no journeys message when there are no journeys to display', async () => {
+  render(<AllJourneysComponent />);
+  await screen.findByText('No journeys to display');
+});
+
+it('renders the create new journey button', async () => {
+  render(<AllJourneysComponent />);
+  const button = await screen.findByText('Create New Journey');
+  expect(button).toBeInTheDocument();
+});
+
+it('renders the fixed bottom right button with text New', async () => {
+  render(<AllJourneysComponent />);
+  const button = await screen.findByText('New');
+  expect(button).toBeInTheDocument();
+});
 
 it('sets the journey data correctly', async () => {
   global.fetch = jest.fn(() =>
@@ -90,5 +111,5 @@ it('sets the journey data correctly', async () => {
   const journeyName2 = await screen.findByText('Trip Test');
   expect(journeyName).toBeInTheDocument();
   expect(journeyName2).toBeInTheDocument();
-  
+
 });
