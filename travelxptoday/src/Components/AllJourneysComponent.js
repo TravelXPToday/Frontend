@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import ModalJourneyComponent from "./ModalJourneyComponent";
 import { Link } from "react-router-dom";
 import ScrollComponent from "./ScrollComponent";
-
+const refresh = () => {
+  setTimeout(() => {
+    window.location.reload();
+  }, 200);  
+}; 
 const AllJourneyComponents = () => {
   const [journeyData, setJourneyData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,11 +14,9 @@ const AllJourneyComponents = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); 
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);  
-  const refresh = () => {
-    setTimeout(() => {
-      window.location.reload();
-    }, 200);  
-  }; 
+
+
+  
   useEffect(() => {
     fetch("http://127.0.0.1:5000/journey/all")
       .then((response) => {
@@ -37,7 +39,7 @@ const AllJourneyComponents = () => {
   }, []);
 
   const Modal = () => ( 
-    <div className="fixed z-20 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div className="fixed z-20 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true" data-testid="modal">
       <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 bg-gradient-to-b from-teal-700 to-blue-gray-900 transition-opacity ease-in-out delay-150" aria-hidden="true"></div>
         <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
@@ -131,3 +133,4 @@ const AllJourneyComponents = () => {
 };
 
 export default AllJourneyComponents;  
+export { refresh };
