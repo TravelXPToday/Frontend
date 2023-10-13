@@ -7,7 +7,7 @@ import {
     Textarea,
 } from "@material-tailwind/react";
 
-function ModalJourneyComponent({  refresh }) {
+function ModalJourneyComponent({  refresh, onSubmit }) {
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -55,7 +55,7 @@ function ModalJourneyComponent({  refresh }) {
   
     const handleTravelerChange = (index, value) => {
       const newTravelers = [...formData.travelers];
-      newTravelers[index].name = value;  // Corrected this line
+      newTravelers[index].name = value;  
       setFormData(prev => ({ ...prev, travelers: newTravelers }));
     };
     
@@ -63,6 +63,10 @@ function ModalJourneyComponent({  refresh }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    if (onSubmit && typeof onSubmit === 'function') {
+      onSubmit(e, formData);
+      return;
+    }
 
     if (isNaN(Date.parse(formData.startDate)) || isNaN(Date.parse(formData.endDate))) {
       console.error('Invalid date format');
@@ -189,6 +193,8 @@ function ModalJourneyComponent({  refresh }) {
               name="startDate"
               onChange={handleInputChange}
               required
+              data-testid="startDate"
+              
             />
             <Input
               className='focus:bg-teal-100 '
@@ -198,6 +204,7 @@ function ModalJourneyComponent({  refresh }) {
               name="endDate"
               onChange={handleInputChange}
               required
+              data-testid="endDate"
             />
           </div>
           <div className="flex mb-4  gap-2 flex-auto flex-wrap ">
@@ -207,7 +214,8 @@ function ModalJourneyComponent({  refresh }) {
               label="Start Location"
               name="startLocation"
               onChange={handleInputChange}
-              required
+              required            
+              data-testid="startLocation"
             />
             <Input
               className='focus:bg-teal-100 '
@@ -216,6 +224,7 @@ function ModalJourneyComponent({  refresh }) {
               name="destination"
               onChange={handleInputChange}
               required
+              data-testid="destination"
             />
           </div>
           <div className='mb-2 w-full '>
@@ -225,6 +234,7 @@ function ModalJourneyComponent({  refresh }) {
               label="Mode of Transportation"
               name="transportation"
               onChange={handleInputChange}
+              data-testid="transportation"
             />
           </div>
           <div className='w-full'>
@@ -233,6 +243,8 @@ function ModalJourneyComponent({  refresh }) {
               label="Description"
               name="description"
               onChange={handleInputChange}
+              data-testid="description"
+              
               
             />
           </div>
