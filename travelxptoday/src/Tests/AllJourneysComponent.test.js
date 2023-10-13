@@ -14,6 +14,10 @@ beforeEach(() => {
 
 afterEach(() => {
   jest.restoreAllMocks();
+  global.fetch = jest.fn(() => Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve([])
+  }));
 });
 
 it('should refresh the page after 200ms', () => {
@@ -51,6 +55,8 @@ it('displays error message when fetch call fails', async () => {
   await screen.findByText('Error:');
 });
 
+
+
 it('displays no journeys message when there are no journeys to display', async () => {
   render(<AllJourneysComponent />);
   await screen.findByText('No journeys to display');
@@ -68,7 +74,7 @@ it('renders the fixed bottom right button with text New', async () => {
   expect(button).toBeInTheDocument();
 });
 
-it('sets the journey data correctly', async () => {
+it('Fetch functions displays the information using the component correctly', async () => {
   global.fetch = jest.fn(() =>
     Promise.resolve({
       ok: true,
@@ -113,3 +119,13 @@ it('sets the journey data correctly', async () => {
   expect(journeyName2).toBeInTheDocument();
 
 });
+
+// if not at the end of the tests it breaks the other tests
+it('throws error when response is not ok', async () => {
+  global.fetch = jest.fn(() => Promise.resolve({ ok: false }));
+  render(<AllJourneysComponent />);
+  const text = await screen.findByText((content) => content.includes('HTTP error! Status: undefined'));
+  expect(text).toBeInTheDocument();
+});
+
+
