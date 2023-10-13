@@ -18,11 +18,11 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
         description: '',
         travelers: [
           {
-            "name": "",
+            "name": "Art",
             "email": "test@gmail"
           },
           {
-            "name": "",
+            "name": "Jelle",
             "email": "Test@gmail.com"
           }
         ], 
@@ -89,8 +89,8 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
       return;
     }
     if (typeof formData.name !== 'string' || formData.destination.trim() === '') {
-      console.error('Destination must be a non-empty string');
-      alert('TheName must be a non-empty string');
+      console.error('name must be a non-empty string');
+      alert('The name must be a non-empty string');
       setLoading(false);
       return;
     }
@@ -261,6 +261,7 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
                 value={traveler.name}  
                 onChange={(e) => handleTravelerChange(index, e.target.value)}
                 required
+                data-testid={`traveler-${index}`}
               />
             </div>
           ))}
