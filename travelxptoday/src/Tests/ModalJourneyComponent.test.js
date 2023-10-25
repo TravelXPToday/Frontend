@@ -256,5 +256,5 @@ it('Returns an error when mode of transport is empty', async () => {
 
     //TODO: Add traveler dropdown and test it 
 });
-
+//TODO: make the user event less repetetive 
 // The only thing we is dont test is that it is posted to the database. but we dont want to do that because we dont want to post to the database when we are testing.
