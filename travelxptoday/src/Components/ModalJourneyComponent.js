@@ -88,7 +88,7 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
       setLoading(false);
       return;
     }
-    if (typeof formData.name !== 'string' || formData.destination.trim() === '') {
+    if (typeof formData.name !== 'string' || formData.name.trim() === '') {
       console.error('name must be a non-empty string');
       alert('The name must be a non-empty string');
       setLoading(false);
@@ -107,6 +107,12 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
       setLoading(false);
       return;
     }
+    if (typeof formData.transportation !== 'string' || formData.transportation.trim() === '') {
+      console.error('Transportation must be a non-empty string');
+      alert('Transportation must be a non-empty string');
+      setLoading(false);
+      return;
+    }
 
     if (!Array.isArray(formData.travelers) ||
       formData.travelers.some(traveler =>
@@ -121,13 +127,8 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
       return;
     }
 
-    if (formData.transportation && (typeof formData.transportation !== 'string' || formData.transportation.trim() === '')) {
-      console.error('Transportation must be a non-empty string');
-      alert('Transportation must be a non-empty string');
-      setLoading(false);
-      return;
-    }
-    if (formData.startDate && formData.endDate && formData.destination && formData.startLocation && formData.description) {
+
+    if (formData.startDate && formData.endDate && formData.destination && formData.startLocation && formData.description && formData.travelers && formData.transportation) {
       
 
       try {
@@ -170,7 +171,7 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
         Enter the details of your journey.
       </Typography>
 
-      <form className="mt-8 mb-2 max-w-screen-lg" onSubmit={handleSubmit}>
+      <form className="mt-8 mb-2 max-w-screen-lg  " onSubmit={handleSubmit} noValidate >
         <div className="mb-4 flex flex-wrap justify-between">
           <div className='mb-4 w-full'>
             <Input
@@ -179,10 +180,11 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               size="lg"
               label="Name"
               name="name"
-              onChange={handleInputChange}
-              required
+              onChange={handleInputChange}              
               data-testid="name"
+              required
             />
+
           </div>
           <div className="flex mb-2  w-full gap-2 flex-wrap">
             <Input
@@ -192,7 +194,9 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               label="Start Date"
               name="startDate"
               onChange={handleInputChange}
+              
               required
+              
               data-testid="startDate"
               
             />
@@ -204,6 +208,7 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               name="endDate"
               onChange={handleInputChange}
               required
+              
               data-testid="endDate"
             />
           </div>
@@ -214,8 +219,9 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               label="Start Location"
               name="startLocation"
               onChange={handleInputChange}
-              required            
+                  required        
               data-testid="startLocation"
+              
             />
             <Input
               className='focus:bg-teal-100 '
@@ -223,6 +229,7 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               label="Destination"
               name="destination"
               onChange={handleInputChange}
+              
               required
               data-testid="destination"
             />
@@ -235,6 +242,7 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               name="transportation"
               onChange={handleInputChange}
               data-testid="transportation"
+              required
             />
           </div>
           <div className='w-full'>
@@ -269,7 +277,8 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
 
         <Button 
           type="submit"
-          className="mt-6 bg-pink-500 rounded-full text-white p-2 hover:border-1 hover:border-pink-500 hover:text-white hover:bg-teal-900 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+          className="  mt-6 bg-pink-500 rounded-full text-white p-2 hover:border-1 hover:border-pink-500 hover:text-white hover:bg-teal-900 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+          // group-invalid:pointer-events-none group-invalid:opacity-30
           fullWidth
           
         >
