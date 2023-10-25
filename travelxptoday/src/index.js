@@ -8,7 +8,7 @@ import WelcomePage from './Pages/Welcomepage';
 import NavBar from './Components/NavbarComponent';
 import { ThemeProvider } from "@material-tailwind/react";
 import DailyMomentsPage from './Pages/DailyMomentsPage';
-import TravelerPage from './Pages/TravelerPage';
+// import TravelerPage from './Pages/TravelerPage';
   ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider>
@@ -19,7 +19,7 @@ import TravelerPage from './Pages/TravelerPage';
         <Route path="/welcomepage" element={<WelcomePage />} />
         <Route path="/journey" element={<AppJourney />} />
         <Route path="/journey/:id" element={<DailyMomentsPage/>} />
-        <Route path='/traveler' element={<TravelerPage/>} />
+        {/* <Route path='/traveler' element={<TravelerPage/>} /> */}
       </Routes>
     </main>
     </BrowserRouter>

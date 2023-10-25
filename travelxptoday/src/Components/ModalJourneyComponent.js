@@ -7,7 +7,7 @@ import {
     Textarea,
 } from "@material-tailwind/react";
 
-function ModalJourneyComponent({  refresh }) {
+function ModalJourneyComponent({  refresh, onSubmit }) {
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -18,11 +18,11 @@ function ModalJourneyComponent({  refresh }) {
         description: '',
         travelers: [
           {
-            "name": "",
+            "name": "Art",
             "email": "test@gmail"
           },
           {
-            "name": "",
+            "name": "Jelle",
             "email": "Test@gmail.com"
           }
         ], 
@@ -55,7 +55,7 @@ function ModalJourneyComponent({  refresh }) {
   
     const handleTravelerChange = (index, value) => {
       const newTravelers = [...formData.travelers];
-      newTravelers[index].name = value;  // Corrected this line
+      newTravelers[index].name = value;  
       setFormData(prev => ({ ...prev, travelers: newTravelers }));
     };
     
@@ -63,6 +63,10 @@ function ModalJourneyComponent({  refresh }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    if (onSubmit && typeof onSubmit === 'function') {
+      onSubmit(e, formData);
+      return;
+    }
 
     if (isNaN(Date.parse(formData.startDate)) || isNaN(Date.parse(formData.endDate))) {
       console.error('Invalid date format');
@@ -84,9 +88,9 @@ function ModalJourneyComponent({  refresh }) {
       setLoading(false);
       return;
     }
-    if (typeof formData.name !== 'string' || formData.destination.trim() === '') {
-      console.error('Destination must be a non-empty string');
-      alert('TheName must be a non-empty string');
+    if (typeof formData.name !== 'string' || formData.name.trim() === '') {
+      console.error('name must be a non-empty string');
+      alert('The name must be a non-empty string');
       setLoading(false);
       return;
     }
@@ -100,6 +104,12 @@ function ModalJourneyComponent({  refresh }) {
     if (typeof formData.description !== 'string' || formData.description.trim() === '') {
       console.error('Description must be a non-empty string');
       alert('Description must be a non-empty string');
+      setLoading(false);
+      return;
+    }
+    if (typeof formData.transportation !== 'string' || formData.transportation.trim() === '') {
+      console.error('Transportation must be a non-empty string');
+      alert('Transportation must be a non-empty string');
       setLoading(false);
       return;
     }
@@ -117,13 +127,8 @@ function ModalJourneyComponent({  refresh }) {
       return;
     }
 
-    if (formData.transportation && (typeof formData.transportation !== 'string' || formData.transportation.trim() === '')) {
-      console.error('Transportation must be a non-empty string');
-      alert('Transportation must be a non-empty string');
-      setLoading(false);
-      return;
-    }
-    if (formData.startDate && formData.endDate && formData.destination && formData.startLocation && formData.description) {
+
+    if (formData.startDate && formData.endDate && formData.destination && formData.startLocation && formData.description && formData.travelers && formData.transportation) {
       
 
       try {
@@ -166,7 +171,7 @@ function ModalJourneyComponent({  refresh }) {
         Enter the details of your journey.
       </Typography>
 
-      <form className="mt-8 mb-2 max-w-screen-lg" onSubmit={handleSubmit}>
+      <form className="mt-8 mb-2 max-w-screen-lg  " onSubmit={handleSubmit} noValidate >
         <div className="mb-4 flex flex-wrap justify-between">
           <div className='mb-4 w-full'>
             <Input
@@ -175,10 +180,11 @@ function ModalJourneyComponent({  refresh }) {
               size="lg"
               label="Name"
               name="name"
-              onChange={handleInputChange}
-              required
+              onChange={handleInputChange}              
               data-testid="name"
+              required
             />
+
           </div>
           <div className="flex mb-2  w-full gap-2 flex-wrap">
             <Input
@@ -188,7 +194,11 @@ function ModalJourneyComponent({  refresh }) {
               label="Start Date"
               name="startDate"
               onChange={handleInputChange}
+              
               required
+              
+              data-testid="startDate"
+              
             />
             <Input
               className='focus:bg-teal-100 '
@@ -198,6 +208,8 @@ function ModalJourneyComponent({  refresh }) {
               name="endDate"
               onChange={handleInputChange}
               required
+              
+              data-testid="endDate"
             />
           </div>
           <div className="flex mb-4  gap-2 flex-auto flex-wrap ">
@@ -207,7 +219,9 @@ function ModalJourneyComponent({  refresh }) {
               label="Start Location"
               name="startLocation"
               onChange={handleInputChange}
-              required
+                  required        
+              data-testid="startLocation"
+              
             />
             <Input
               className='focus:bg-teal-100 '
@@ -215,7 +229,9 @@ function ModalJourneyComponent({  refresh }) {
               label="Destination"
               name="destination"
               onChange={handleInputChange}
+              
               required
+              data-testid="destination"
             />
           </div>
           <div className='mb-2 w-full '>
@@ -225,6 +241,8 @@ function ModalJourneyComponent({  refresh }) {
               label="Mode of Transportation"
               name="transportation"
               onChange={handleInputChange}
+              data-testid="transportation"
+              required
             />
           </div>
           <div className='w-full'>
@@ -233,6 +251,8 @@ function ModalJourneyComponent({  refresh }) {
               label="Description"
               name="description"
               onChange={handleInputChange}
+              data-testid="description"
+              
               
             />
           </div>
@@ -249,6 +269,7 @@ function ModalJourneyComponent({  refresh }) {
                 value={traveler.name}  
                 onChange={(e) => handleTravelerChange(index, e.target.value)}
                 required
+                data-testid={`traveler-${index}`}
               />
             </div>
           ))}
@@ -256,7 +277,8 @@ function ModalJourneyComponent({  refresh }) {
 
         <Button 
           type="submit"
-          className="mt-6 bg-pink-500 rounded-full text-white p-2 hover:border-1 hover:border-pink-500 hover:text-white hover:bg-teal-900 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+          className="  mt-6 bg-pink-500 rounded-full text-white p-2 hover:border-1 hover:border-pink-500 hover:text-white hover:bg-teal-900 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+          // group-invalid:pointer-events-none group-invalid:opacity-30
           fullWidth
           
         >

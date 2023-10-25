@@ -23,11 +23,11 @@ const WelcomePage = () => {
 
             <div className="relative z-10">
               <h1 className="text-4xl font-bold mb-4 ">
-                Welkom bij TravelXPToday!
+                Welcom to TravelXPToday!
               </h1>
               <p className="text-lg font-semibold mb-8">
-                Ontdek de schoonheid van de wereld, deel je avonturen en leer
-                van andere reizigers.
+
+                Discover the beauty of the world, share your adventures and learn from other travelers.
               </p>
             </div>
           </div>
@@ -37,7 +37,7 @@ const WelcomePage = () => {
             
           >
             <Link to="/journey"
-            data-testid="JourneyButton"> Ga verder naar reizen </Link>
+            data-testid="JourneyButton"> Continue to your journeys </Link>
           </button>
           
         </div>
