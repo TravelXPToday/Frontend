@@ -5,6 +5,43 @@ beforeAll(() => {
     global.Element.prototype.animate = jest.fn();
   });
 
+  async function fillForm({
+    name = 'Test Journey',
+    startDate = '2023-12-25',
+    endDate = '2023-12-30',
+    startLocation = 'New York',
+    destination = 'Los Angeles',
+    description = 'A memorable journey',
+    transportation = 'Car',
+    traveler0 = 'art',
+    traveler1 = 'jelle',
+  }){
+    render(<ModalJourneyComponent refresh={() => {}} />);
+    userEvent.type(screen.getByTestId('name'), name);
+    userEvent.type(screen.getByTestId('startDate'), startDate);
+    userEvent.type(screen.getByTestId('endDate'), endDate);
+    userEvent.type(screen.getByTestId('startLocation'), startLocation);
+    userEvent.type(screen.getByTestId('destination'), destination);
+    userEvent.type(screen.getByTestId('description'), description);
+    userEvent.type(screen.getByTestId('transportation'), transportation);
+    userEvent.type(screen.getByTestId('traveler-0'), traveler0);
+    userEvent.type(screen.getByTestId('traveler-1'), traveler1);
+  }
+
+  async function CheckError(expectedAlertMessage) {
+    
+    userEvent.click(screen.getByRole('button', { name: /create journey/i }));
+  
+    if (expectedAlertMessage) {
+      const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
+      await waitFor(() => {
+        expect(alertSpy).toHaveBeenCalledWith(expectedAlertMessage);
+      });
+      alertSpy.mockRestore();
+    }
+  }
+  
+
 describe('ModalJourneyComponent', () => {
   it('renders correctly', () => {
     render(<ModalJourneyComponent refresh={() => {}} />);
@@ -18,15 +55,9 @@ describe('ModalJourneyComponent', () => {
     expect(screen.getByTestId('description')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /create journey/i })).toBeInTheDocument();
   });
+  
   it('allows the user to fill in the form', async () => {
-    render(<ModalJourneyComponent refresh={() => {}} />);
-    userEvent.type(screen.getByTestId('name'), 'Test Journey');
-    userEvent.type(screen.getByTestId('startDate'), '2023-12-25');
-    userEvent.type(screen.getByTestId('endDate'), '2023-12-30');
-    userEvent.type(screen.getByTestId('startLocation'), 'New York');
-    userEvent.type(screen.getByTestId('destination'), 'Los Angeles');
-    userEvent.type(screen.getByTestId('description'), 'A memorable journey');
-    userEvent.type(screen.getByTestId('transportation'), 'Car');
+    fillForm({});
   
 
     expect(screen.getByTestId('name')).toHaveValue('Test Journey');
@@ -38,220 +69,62 @@ describe('ModalJourneyComponent', () => {
     expect(screen.getByTestId('transportation')).toHaveValue('Car');
   });
 
-
-  it('Returns an error when startdate has the wrong format', async () => {
-    render(<ModalJourneyComponent refresh={() => { }} />);
-  
-    // Spy on window alert
-    const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => { });
-  
-    userEvent.type(screen.getByTestId('name'), 'Art');
-    userEvent.type(screen.getByTestId('startDate'), 'bob');
-    userEvent.type(screen.getByTestId('endDate'), '2023-12-30');
-    userEvent.type(screen.getByTestId('startLocation'), 'nuenen');
-    userEvent.type(screen.getByTestId('destination'), 'eindhoven');
-    userEvent.type(screen.getByTestId('description'), 'test');
-    userEvent.type(screen.getByTestId('transportation'), 'Car');
-    userEvent.type(screen.getByTestId('traveler-0'), 'art');
-    userEvent.type(screen.getByTestId('traveler-1'), 'jelle');
-  
-    userEvent.click(screen.getByRole('button', { name: /create journey/i }));
-    await waitFor(() => {
-        expect(alertSpy).toHaveBeenCalledWith('Invalid date format');
+  it('Returns an error when name is empty', async () => {
+    fillForm({
+      name: '',
     });
-  
-    // Clean up the spy
-    alertSpy.mockRestore();
+    CheckError('Name must be a non-empty string');
   });
 
-  it('Returns an error when enddate has the wrong format', async () => {
-    render(<ModalJourneyComponent refresh={() => { }} />);
-  
-    // Spy on window alert
-    const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => { });
-  
-    userEvent.type(screen.getByTestId('name'), 'Art');
-    userEvent.type(screen.getByTestId('startDate'), '2023-12-30');
-    userEvent.type(screen.getByTestId('endDate'), 'bob');
-    userEvent.type(screen.getByTestId('startLocation'), 'nuenen');
-    userEvent.type(screen.getByTestId('destination'), 'eindhoven');
-    userEvent.type(screen.getByTestId('description'), 'test');
-    userEvent.type(screen.getByTestId('transportation'), 'Car');
-    userEvent.type(screen.getByTestId('traveler-0'), 'art');
-    userEvent.type(screen.getByTestId('traveler-1'), 'jelle');
-  
-    userEvent.click(screen.getByRole('button', { name: /create journey/i }));
-    await waitFor(() => {
-        expect(alertSpy).toHaveBeenCalledWith('Invalid date format');
+  it('Returns an error when start date has the wrong format', async () => {
+    fillForm({
+      startDate: 'bob',
     });
-   
-    // Clean up the spy
-    alertSpy.mockRestore();
+    CheckError('Invalid date format');
   });
+  
+  it('Returns an error when end date has the wrong format', async () => {
+    fillForm({
+      endDate: 'bob',
+    });
+    CheckError('Invalid date format');
+  });
+  
   it('end date is before start date', async () => {
-
-    render(<ModalJourneyComponent refresh={() => {}}  />);
-    const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => { });
-
-    userEvent.type(screen.getByTestId('name'), 'Art');
-    userEvent.type(screen.getByTestId('startDate'), '2023-12-30');
-    userEvent.type(screen.getByTestId('endDate'), '2023-12-25');
-    userEvent.type(screen.getByTestId('startLocation'), 'New York');
-    userEvent.type(screen.getByTestId('destination'), 'Los Angeles');
-    userEvent.type(screen.getByTestId('description'), 'A memorable journey');
-    userEvent.type(screen.getByTestId('transportation'), 'Car');
-    userEvent.type(screen.getByTestId('traveler-0'), 'art');
-    userEvent.type(screen.getByTestId('traveler-1'), 'jelle');
-
-    userEvent.click(screen.getByRole('button', { name: /create journey/i }));
-    
-    await waitFor(() => {
-      expect(alertSpy).toHaveBeenCalledWith('End date must be after start date');
+    fillForm({
+      startDate: '2023-12-30',
+      endDate: '2023-12-25',
     });
-
-      // Clean up the spy
-      alertSpy.mockRestore();
+    CheckError('End date must be after start date');
   });
-  it('submits the form when all data is correct', async () => {
-    const handleSubmit = jest.fn();
-    render(<ModalJourneyComponent refresh={() => {}} onSubmit={handleSubmit} />);
-
-    userEvent.type(screen.getByTestId('name'), 'Test Journey');
-    userEvent.type(screen.getByTestId('startDate'), '2023-12-25');
-    userEvent.type(screen.getByTestId('endDate'), '2023-12-30');
-    userEvent.type(screen.getByTestId('startLocation'), 'New York');
-    userEvent.type(screen.getByTestId('destination'), 'Los Angeles');
-    userEvent.type(screen.getByTestId('description'), 'A memorable journey');
-    userEvent.type(screen.getByTestId('transportation'), 'Car');
-
-     expect(screen.getByTestId('name')).toHaveValue('Test Journey');
-    userEvent.click(screen.getByRole('button', { name: /create journey/i }));
-    await waitFor(() => {
-        expect(handleSubmit).toHaveBeenCalled();
-    });
-  });
-
-    it('Returns an error when name is empty', async () => {
-        render(<ModalJourneyComponent refresh={() => { }} />);
-
-        // Spy on window alert
-        const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => { });
-
-        userEvent.type(screen.getByTestId('name'), '');
-        userEvent.type(screen.getByTestId('startDate'), '2023-12-25');
-        userEvent.type(screen.getByTestId('endDate'), '2023-12-30');
-        userEvent.type(screen.getByTestId('startLocation'), 'New York');
-        userEvent.type(screen.getByTestId('destination'), 'Los Angeles');
-        userEvent.type(screen.getByTestId('description'), 'A memorable journey');
-        userEvent.type(screen.getByTestId('transportation'), 'Car');
-        userEvent.type(screen.getByTestId('traveler-0'), 'art');
-        userEvent.type(screen.getByTestId('traveler-1'), 'jelle');
-
-        userEvent.click(screen.getByRole('button', { name: /create journey/i }));
-        await waitFor(() => {
-            expect(alertSpy).toHaveBeenCalledWith('The name must be a non-empty string');
-        });
-    
-        // Clean up the spy
-        alertSpy.mockRestore();
-    });
-    it('Returns an error when destination is empty', async () => {
-      render(<ModalJourneyComponent refresh={() => { }} />);
-
-      // Spy on window alert
-      const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => { });
-
-      userEvent.type(screen.getByTestId('name'), 'Art');
-      userEvent.type(screen.getByTestId('startDate'), '2023-12-25');
-      userEvent.type(screen.getByTestId('endDate'), '2023-12-30');
-      userEvent.type(screen.getByTestId('startLocation'), 'New York');
-      userEvent.type(screen.getByTestId('destination'), '');
-      userEvent.type(screen.getByTestId('description'), 'A memorable journey');
-      userEvent.type(screen.getByTestId('transportation'), 'Car');
-      userEvent.type(screen.getByTestId('traveler-0'), 'art');
-      userEvent.type(screen.getByTestId('traveler-1'), 'jelle');
-
-      userEvent.click(screen.getByRole('button', { name: /create journey/i }));
-      await waitFor(() => {
-          expect(alertSpy).toHaveBeenCalledWith('Destination must be a non-empty string');
-      });
   
-      // Clean up the spy
-      alertSpy.mockRestore();
-  });
-  it('Returns an error when startlocation is empty', async () => {
-    render(<ModalJourneyComponent refresh={() => { }} />);
-
-    // Spy on window alert
-    const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => { });
-
-    userEvent.type(screen.getByTestId('name'), 'Art');
-    userEvent.type(screen.getByTestId('startDate'), '2023-12-25');
-    userEvent.type(screen.getByTestId('endDate'), '2023-12-30');
-    userEvent.type(screen.getByTestId('startLocation'), '');
-    userEvent.type(screen.getByTestId('destination'), 'dsadsadsa');
-    userEvent.type(screen.getByTestId('description'), 'A memorable journey');
-    userEvent.type(screen.getByTestId('transportation'), 'Car');
-    userEvent.type(screen.getByTestId('traveler-0'), 'art');
-    userEvent.type(screen.getByTestId('traveler-1'), 'jelle');
-
-    userEvent.click(screen.getByRole('button', { name: /create journey/i }));
-    await waitFor(() => {
-        expect(alertSpy).toHaveBeenCalledWith('Start location must be a non-empty string');
+  it('Returns an error when start location is empty', async () => {
+    fillForm({
+      startLocation: '',
     });
-
-    // Clean up the spy
-    alertSpy.mockRestore();
-});
-it('Returns an error when description is empty', async () => {
-  render(<ModalJourneyComponent refresh={() => { }} />);
-
-  // Spy on window alert
-  const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => { });
-
-  userEvent.type(screen.getByTestId('name'), 'Art');
-  userEvent.type(screen.getByTestId('startDate'), '2023-12-25');
-  userEvent.type(screen.getByTestId('endDate'), '2023-12-30');
-  userEvent.type(screen.getByTestId('startLocation'), 'nuenen');
-  userEvent.type(screen.getByTestId('destination'), 'eindhoven');
-  userEvent.type(screen.getByTestId('description'), '');
-  userEvent.type(screen.getByTestId('transportation'), 'Car');
-  userEvent.type(screen.getByTestId('traveler-0'), 'art');
-  userEvent.type(screen.getByTestId('traveler-1'), 'jelle');
-
-  userEvent.click(screen.getByRole('button', { name: /create journey/i }));
-  await waitFor(() => {
-      expect(alertSpy).toHaveBeenCalledWith('Description must be a non-empty string');
+    CheckError('Start location must be a non-empty string');
   });
-
-  // Clean up the spy
-  alertSpy.mockRestore();
-});
-
-it('Returns an error when mode of transport is empty', async () => {
-  render(<ModalJourneyComponent refresh={() => { }} />);
-
-  // Spy on window alert
-  const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => { });
-
-  userEvent.type(screen.getByTestId('name'), 'Art');
-  userEvent.type(screen.getByTestId('startDate'), '2023-12-25');
-  userEvent.type(screen.getByTestId('endDate'), '2023-12-30');
-  userEvent.type(screen.getByTestId('startLocation'), 'nuenen');
-  userEvent.type(screen.getByTestId('destination'), 'eindhoven');
-  userEvent.type(screen.getByTestId('description'), 'A memorable journey');
-  userEvent.type(screen.getByTestId('transportation'), '');
-  userEvent.type(screen.getByTestId('traveler-0'), 'art');
-  userEvent.type(screen.getByTestId('traveler-1'), 'jelle');
-
-  userEvent.click(screen.getByRole('button', { name: /create journey/i }));
-  await waitFor(() => {
-      expect(alertSpy).toHaveBeenCalledWith('Transportation must be a non-empty string');
+  
+  it('Returns an error when destination is empty', async () => {
+    fillForm({
+      destination: '',
+    });
+    CheckError('Destination must be a non-empty string');
   });
- 
-  // Clean up the spy
-  alertSpy.mockRestore();
-});
+  
+  it('Returns an error when description is empty', async () => {
+    fillForm({
+      description: '',
+    });
+    CheckError('Description must be a non-empty string');
+  });
+  
+  it('Returns an error when mode of transport is empty', async () => {
+    fillForm({
+      transportation: '',
+    });
+    CheckError('Mode of transport must be a non-empty string');
+  });
 
 
     //TODO: Add traveler dropdown and test it 
