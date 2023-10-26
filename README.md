@@ -1,7 +1,14 @@
 <img src="https://ordinarycoders.com/_next/image?url=https%3A%2F%2Fd2gdtie5ivbdow.cloudfront.net%2Fmedia%2Fimages%2Fcover_react_tailwind.png&w=1920&q=75"/>
 
 # Frontend
+![GitHub Actions Workflow Status](https://github.com/TravelXPToday/Frontend/workflows/setup/badge.svg)
 
+
+![GitHub last commit](https://img.shields.io/github/last-commit/TravelXPToday/Frontend)
+![GitHub top language](https://img.shields.io/github/languages/top/TravelXPToday/Frontend)
+![GitHub open issues](https://img.shields.io/github/issues-raw/TravelXPToday/Frontend)
+![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/TravelXPToday/Frontend)
+![GitHub language count](https://img.shields.io/github/languages/count/TravelXPToday/Frontend)
 
 ### Tailwind
 Why we chose [Tailwind](https://tailwindcss.com)
@@ -20,6 +27,19 @@ The Fetch API provides a JavaScript interface for accessing and manipulating par
 
 Unlike XMLHttpRequest that is a callback-based API, Fetch is promise-based and provides a better alternative that can be easily used in service workers. Fetch also integrates advanced HTTP concepts such as CORS and other extensions to HTTP. (Using the Fetch API - Web APIs | MDN, 2023)[^1]
 
+### how to start the program
+To run the React app, run the following commands in the terminal:
+```bash
+cd TravelXPToday
+npm install
+npm start
+```
+To run the Flask app, run the following commands in the terminal:
+```bash
+cd API
+pip install -r requirements.txt
+python app.py
+```
 ## How we use FetchAPI
 
 We use FetchAPI to gather data from our backend to display at our frontend. In the codeblock you can see how we do this.
