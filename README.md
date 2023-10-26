@@ -1,7 +1,14 @@
 <img src="https://ordinarycoders.com/_next/image?url=https%3A%2F%2Fd2gdtie5ivbdow.cloudfront.net%2Fmedia%2Fimages%2Fcover_react_tailwind.png&w=1920&q=75"/>
 
 # Frontend
+![GitHub Actions Workflow Status](https://github.com/TravelXPToday/Frontend/workflows/setup/badge.svg)
 
+
+![GitHub last commit](https://img.shields.io/github/last-commit/TravelXPToday/Frontend)
+![GitHub top language](https://img.shields.io/github/languages/top/TravelXPToday/Frontend)
+![GitHub open issues](https://img.shields.io/github/issues-raw/TravelXPToday/Frontend)
+![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/TravelXPToday/Frontend)
+![GitHub language count](https://img.shields.io/github/languages/count/TravelXPToday/Frontend)
 
 ### Tailwind
 Why we chose [Tailwind](https://tailwindcss.com)
