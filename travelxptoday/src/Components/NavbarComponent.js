@@ -19,7 +19,7 @@ const NavBar = () => {
       <nav className="py-4 shadow-md border-b-4 bg-slate-900 border-teal-600 sticky top-0 z-20">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex justify-between items-center">
-          <Link to="/welcomepage"
+          <Link to="/"
             data-testid="ImageToWelcomePage">
             <img
               src={ImageLogo}
@@ -28,7 +28,7 @@ const NavBar = () => {
               
             />
             </Link>
-            <Link to="/welcomepage"
+            <Link to="/"
               data-testid="TypeWriterButtonToWelcomePage"
               className="ml-4 text-2xl font-semibold text-pink-500 hover:border-b-2 hover:border-pink-500"
               

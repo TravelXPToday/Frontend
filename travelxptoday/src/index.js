@@ -10,12 +10,14 @@ import { ThemeProvider } from "@material-tailwind/react";
 import DailyMomentsPage from './Pages/DailyMomentsPage';
 import { Auth0Provider } from "@auth0/auth0-react";
 // import TravelerPage from './Pages/TravelerPage';
-  ReactDOM.render(
+  
+ReactDOM.render(
+    
     <Auth0Provider
       domain="dev-ie13exvycq67h1fb.us.auth0.com"
       clientId="wxGMKUhjLSfFmVdR0CrFvMfC1S6U0Pr0"
       authorizationParams={{
-        redirect_uri: window.location.origin,
+        redirect_uri: "http://localhost:3000/",
       }}
     >
       <React.StrictMode>
@@ -24,7 +26,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
             <main className="bg-gradient-to-b from-teal-900 to-blue-gray-900 ">
               <NavBar />
               <Routes>
-                <Route path="/welcomepage" element={<WelcomePage />} />
+                <Route path="/" element={<WelcomePage />} />
                 <Route path="/journey" element={<AppJourney />} />
                 <Route path="/journey/:id" element={<DailyMomentsPage />} />
                 {/* <Route path='/traveler' element={<TravelerPage/>} /> */}
