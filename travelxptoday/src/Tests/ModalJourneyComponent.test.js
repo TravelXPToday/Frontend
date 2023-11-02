@@ -43,7 +43,7 @@ beforeAll(() => {
   
 
 describe('ModalJourneyComponent', () => {
-  it('renders correctly', () => {
+  it('Renders correctly', () => {
     render(<ModalJourneyComponent refresh={() => {}} />);
 
     expect(screen.getByTestId('name')).toBeInTheDocument();
@@ -56,7 +56,7 @@ describe('ModalJourneyComponent', () => {
     expect(screen.getByRole('button', { name: /create journey/i })).toBeInTheDocument();
   });
   
-  it('allows the user to fill in the form', async () => {
+  it('Allows the user to fill in the form', async () => {
     fillForm({});
   
 
@@ -90,7 +90,7 @@ describe('ModalJourneyComponent', () => {
     CheckError('Invalid date format');
   });
   
-  it('end date is before start date', async () => {
+  it('Returns an error when end date is before start date', async () => {
     fillForm({
       startDate: '2023-12-30',
       endDate: '2023-12-25',
