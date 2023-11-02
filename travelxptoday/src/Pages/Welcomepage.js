@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import bgImage from '../Assets/Image/Background.jpg';
 import JourneycardsWelcompage from '../Components/JourneycardsWelcomepageComponent';
+import Profile from '../Components/ProfileComponent';
 const WelcomePage = () => { 
   return (
     <div className=" ">
@@ -44,6 +45,7 @@ const WelcomePage = () => {
       </div>
 
       <JourneycardsWelcompage />
+      <Profile />
     </div>
   );
 }

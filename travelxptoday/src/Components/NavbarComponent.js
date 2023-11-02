@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import ImageLogo from '../Assets/Image/Logo.jfif';
 import { Cursor, useTypewriter } from "react-simple-typewriter";
+import LoginButton from './LoginButtonComponent';
+import LogoutButton from './LogoutButtonComponent';
+
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const handleLinkClick = () => {
@@ -38,11 +41,17 @@ const NavBar = () => {
             <li>
               <Link
                 to="/journey"
-                className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg"
+                className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold px-6 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg"
                 data-testid="JourneyLi"
               >
                 Journeys
               </Link>
+            </li>
+            <li>
+              <LoginButton />
+            </li>
+            <li>
+              <LogoutButton />
             </li>
             <li>
               {/* <Link
