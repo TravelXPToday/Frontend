@@ -4,10 +4,17 @@ import ImageLogo from '../Assets/Image/Logo.jfif';
 import { Cursor, useTypewriter } from "react-simple-typewriter";
 import LoginButton from './LoginButtonComponent';
 import LogoutButton from './LogoutButtonComponent';
-
+import { useAuth0 } from "@auth0/auth0-react";
+import { useEffect } from "react";
+import ProfileMenu from './ProfileComponent';
+import AvatarMenu from './AvatarComponent';
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const handleLinkClick = () => {
+    const { isAuthenticated } = useAuth0();
+    useEffect(() => {
+      console.log("Is Authenticated on Mount:", isAuthenticated);
+    }, [isAuthenticated]);  // Empty dependency array makes this useEffect run only on mount
+      const handleLinkClick = () => {
         setIsOpen(false);  // This will close the navbar when a link is clicked
     };
     const [text] = useTypewriter({
@@ -37,7 +44,7 @@ const NavBar = () => {
             </Link>
             <Cursor className="font-bold" cursorColor="#e91e63" />
           </div>
-          <ul className="md:flex hidden space-x-4 mr- ">
+          <ul className="md:flex  space-x-4 flex flex-row justify-center align-middle justify-items-center">
             <li>
               <Link
                 to="/journey"
@@ -46,14 +53,7 @@ const NavBar = () => {
               >
                 Journeys
               </Link>
-            </li>
-            <li>
-              <LoginButton />
-            </li>
-            <li>
-              <LogoutButton />
-            </li>
-            <li>
+
               {/* <Link
                 to="/traveler"
                 className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg"
@@ -69,6 +69,18 @@ const NavBar = () => {
                 Friends
               </Link> */}
             </li>
+            
+              {isAuthenticated ? (
+                <>
+                <li ><LogoutButton /></li>
+                  <li><AvatarMenu /></li>
+                
+                </>
+              ) : (
+                <LoginButton />
+              )}
+            
+
           </ul>
           
           <div className="md:hidden block py-4 px-6">
