@@ -11,10 +11,7 @@ import AvatarMenu from './AvatarComponent';
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { isAuthenticated } = useAuth0();
-    useEffect(() => {
-      console.log("Is Authenticated on Mount:", isAuthenticated);
-    }, [isAuthenticated]);  // Empty dependency array makes this useEffect run only on mount
-      const handleLinkClick = () => {
+     const handleLinkClick = () => {
         setIsOpen(false);  // This will close the navbar when a link is clicked
     };
     const [text] = useTypewriter({
@@ -72,7 +69,7 @@ const NavBar = () => {
             
               {isAuthenticated ? (
                 <>
-                <li ><LogoutButton /></li>
+
                   <li><AvatarMenu /></li>
                 
                 </>

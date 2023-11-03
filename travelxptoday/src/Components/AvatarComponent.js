@@ -1,65 +1,33 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { UserCircleIcon, ChevronDownIcon, Cog6ToothIcon, PowerIcon } from "@heroicons/react/24/solid";
+import { Menu, MenuHandler, MenuList, MenuItem, Avatar, Button, Typography } from "@material-tailwind/react";
 
-import {
-    CubeTransparentIcon,
-    UserCircleIcon,
-    CodeBracketSquareIcon,
-    Square3Stack3DIcon,
-    ChevronDownIcon,
-    Cog6ToothIcon,
-    InboxArrowDownIcon,
-    LifebuoyIcon,
-    PowerIcon,
-    RocketLaunchIcon,
-    Bars2Icon,
-} from "@heroicons/react/24/solid";
-import { Menu, } from "@material-tailwind/react";
-import { MenuHandler, MenuList, MenuItem, Avatar, Button, Typography, } from "@material-tailwind/react";
-// profile menu component
-const profileMenuItems = [
-    {
-        label: "My Profile",
-        icon: UserCircleIcon,
-    },
-    {
-        label: "Edit Profile",
-        icon: Cog6ToothIcon,
-    },
-    {
-        label: "Inbox",
-        icon: InboxArrowDownIcon,
-    },
-    {
-        label: "Help",
-        icon: LifebuoyIcon,
-    },
-    {
-        label: "Sign Out",
-        icon: PowerIcon,
-    },
-];
-
+/**
+ * Renders a menu with options for the user's avatar.
+ * @returns {JSX.Element} The AvatarMenu component.
+ * Ai-generated comment
+ */
 function AvatarMenu() {
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-    const { user, isAuthenticated, isLoading } = useAuth0();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { user, isAuthenticated, logout } = useAuth0();
     const closeMenu = () => setIsMenuOpen(false);
 
     return (
         isAuthenticated && (
-            <Menu open={isMenuOpen} handler={setIsMenuOpen}>
+            <Menu  open={isMenuOpen} handler={setIsMenuOpen} >
                 <MenuHandler>
                     <Button
                         variant="text"
                         color="blue-gray"
                         className="flex items-center gap-1 rounded-full py-0.000001 pr-2 pl-0.5 lg:ml-auto"
+                        data-testid="menu-button"
                     >
                         <Avatar
                             variant="circular"
                             size="sm"
-                            alt="tania andrew"
-                            className="border border-pink-500 p-0.5 "
+                            alt={user.name}
+                            className="border-2 border-pink-500 "
                             src={user.picture}
                         />
                         <ChevronDownIcon
@@ -70,32 +38,67 @@ function AvatarMenu() {
                     </Button>
                 </MenuHandler>
                 <MenuList className="p-1">
-                    {profileMenuItems.map(({ label, icon }, key) => {
-                        const isLastItem = key === profileMenuItems.length - 1;
-                        return (
-                            <MenuItem
-                                key={label}
-                                onClick={closeMenu}
-                                className={`flex items-center gap-2 flex flex-row rounded ${isLastItem
-                                        ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                                        : ""
-                                    }`}
-                            >
-                                {React.createElement(icon, {
-                                    className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
-                                    strokeWidth: 2,
-                                })}
-                                <Typography
-                                    as="span"
-                                    variant="small"
-                                    className="font-normal"
-                                    color={isLastItem ? "red" : "inherit"}
-                                >
-                                    {label}
-                                </Typography>
-                            </MenuItem>
-                        );
-                    })}
+                    <MenuItem
+                        onClick={closeMenu}
+                        className="items-center gap-2 flex flex-row rounded 
+                        hover:bg-teal-500 focus:bg-teal-500/10 active:bg-teal-500/10
+                         hover:text-white focus:text-white active:text-white" 
+                    >
+                        {React.createElement(UserCircleIcon, {
+                            className: `h-4 w-4`,
+                            strokeWidth: 2,
+                        })}
+                        <Typography
+                            as="span"
+                            variant="small"
+                            className="font-normal"
+                            color="inherit"
+                        >
+                            Your Profile(mock)
+                        </Typography>
+                    </MenuItem>
+                    <MenuItem
+                        onClick={closeMenu}
+                        className="items-center gap-2 flex flex-row rounded 
+                        hover:bg-teal-500 focus:bg-teal-500/10 active:bg-teal-500/10
+                         hover:text-white focus:text-white active:text-white "              
+                    >
+                        {React.createElement(Cog6ToothIcon, {
+                            className: `h-4 w-4`,
+                            strokeWidth: 2,
+                        })}
+                        <Typography
+                            as="span"
+                            variant="small"
+                            className="font-normal"
+                            color="inherit"
+                        >
+                            Settings(mock)
+                        </Typography>
+                    </MenuItem>
+                    <MenuItem
+                        test-dataid="logout-button"
+                        onClick={() => {
+                            closeMenu();
+                            logout({ logoutParams: { returnTo: window.location.origin } });
+                        }}
+                        className="flex items-center gap-2  flex-row rounded 
+                        hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                    >
+                        {React.createElement(PowerIcon, {
+                            className: `h-4 w-4`,
+                            strokeWidth: 2,
+                        })}
+                        <Typography
+                            as="span"
+                            variant="small"
+                            className="font-normal"
+                            color="inherit"
+                        >
+                            Sign out
+                        </Typography>
+                    </MenuItem>
+
                 </MenuList>
             </Menu>
         )
