@@ -3,42 +3,56 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import bgImage from '../Assets/Image/Background.jpg';
 import JourneycardsWelcompage from '../Components/JourneycardsWelcomepageComponent';
-
+import { API_BASE_URL } from '../Config';
 const WelcomePage = () => { 
   document.title = "Welcome to TravelXPToday!";
   const { user, isAuthenticated,loginWithRedirect } = useAuth0();
-  
+
+
   useEffect(() => {
     if (isAuthenticated) {
+      const abortController = new AbortController();
+      const signal = abortController.signal;
+  
       const fetchData = async () => {
         try {
-          const response = await fetch("http://127.0.0.1:5000/traveler/all");
+          const response = await fetch(`${API_BASE_URL}/traveler/all`, { signal });
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           const data = await response.json();
   
-          const userEmailLower = user.email.toLowerCase().trim();
-          const userIsInDatabase = data.some(traveler => 
-            traveler.Email.toLowerCase().trim() === userEmailLower
-          );
-  
-          console.log(userIsInDatabase ? "user is in database" : "user is not in database");
+          const userIsInDatabase = checkUserInDatabase(data, user);
+          // console.log(userIsInDatabase ? "user is in database" : "user is not in database");
   
           if (!userIsInDatabase) {
-            addUserToDatabase(user); 
+            await addUserToDatabase(user);
           }
         } catch (error) {
-          console.error("Fetching error: ", error);
+          if (error.name !== 'AbortError') {
+            console.error("Fetching error: ", error);
+          }
         }
       };
   
       fetchData();
+  
+      return () => {
+        abortController.abort(); // Clean up the fetch call if the component unmounts
+      };
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user]); 
+
+  const checkUserInDatabase = (data, user) => {
+    const userEmailLower = user.email.toLowerCase().trim();
+    return data.some(traveler => 
+      traveler.Email.toLowerCase().trim() === userEmailLower && traveler.ID === user.sub
+    ); 
+  };
+
   const addUserToDatabase = async (user) => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/traveler", {
+      const response = await fetch(`${API_BASE_URL}/traveler`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,8 +60,9 @@ const WelcomePage = () => {
         body: JSON.stringify({
           Email: user.email,
           Name: user.name,
-          Username: user.nickname
-        }),
+          Username: user.nickname,
+          ID: user.sub
+        })
       });
   
       if (!response.ok) {

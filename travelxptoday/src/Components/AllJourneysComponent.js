@@ -2,11 +2,17 @@ import React, { useEffect, useState } from "react";
 import ModalJourneyComponent from "./ModalJourneyComponent";
 import { Link } from "react-router-dom";
 import ScrollComponent from "./ScrollComponent";
+import { API_BASE_URL } from '../Config';
+
 const refresh = () => {
   setTimeout(() => {
     window.location.reload();
   }, 200);  
 }; 
+/**
+ * Renders a component that displays all journeys.
+ * @returns {JSX.Element} JSX element containing the journeys.
+ */
 const AllJourneyComponents = () => {
   const [journeyData, setJourneyData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +24,7 @@ const AllJourneyComponents = () => {
 
   
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/journey/all")
+    fetch(`${API_BASE_URL}/journey/all`)
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
