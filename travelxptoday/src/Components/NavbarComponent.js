@@ -7,12 +7,15 @@ import { useAuth0 } from "@auth0/auth0-react";
 import AvatarMenu from './AvatarComponent';
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
   const handleLinkClick = () => {
     setIsOpen(false);
   };
+
   const [text] = useTypewriter({
-    words: ["TravelXPToday", "Where are you going today?", "TravelXPToday", "Adventure!!", "TravelXPToday", "“To Travel is to Live.”"],
+    words: (isAuthenticated ? [`Welcome ${user.name}!`, `Where is ${user.name} today?`, `${user.name}!!`, "“To Travel is to Live.”"] : 
+    ["TravelXPToday", "Where are you going today?", "TravelXPToday", "Adventure!!", "TravelXPToday", "“To Travel is to Live.”"]),
+
     loop: true,
     delaySpeed: 2000,
   });
