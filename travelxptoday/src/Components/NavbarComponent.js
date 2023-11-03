@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 import ImageLogo from '../Assets/Image/Logo.jfif';
 import { Cursor, useTypewriter } from "react-simple-typewriter";
 import LoginButton from './LoginButtonComponent';
-import LogoutButton from './LogoutButtonComponent';
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect } from "react";
-import ProfileMenu from './ProfileComponent';
 import AvatarMenu from './AvatarComponent';
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -23,63 +20,43 @@ const NavBar = () => {
       <nav className="py-4 shadow-md border-b-4 bg-slate-900 border-teal-600 sticky top-0 z-20">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex justify-between items-center">
-          <Link to="/"
-            data-testid="ImageToWelcomePage">
-            <img
-              src={ImageLogo}
-              alt="logo"
-              className="h-16 w-16 rounded-full object-fill"
-              
-            />
+            <Link to="/" data-testid="ImageToWelcomePage">
+              <img
+                src={ImageLogo}
+                alt="logo"
+                className="h-16 w-16 rounded-full object-fill"
+              />
             </Link>
-            <Link to="/"
+            <Link
+              to="/"
               data-testid="TypeWriterButtonToWelcomePage"
               className="ml-4 text-2xl font-semibold text-pink-500 hover:border-b-2 hover:border-pink-500"
-              
             >
               {text}
             </Link>
             <Cursor className="font-bold" cursorColor="#e91e63" />
           </div>
           <ul className="md:flex  space-x-4 flex flex-row justify-center align-middle justify-items-center">
-            <li>
-              <Link
-                to="/journey"
-                className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold px-6 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg"
-                data-testid="JourneyLi"
-              >
-                Journeys
-              </Link>
-
-              {/* <Link
-                to="/traveler"
-                className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg"
-              >
-                Me
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/"
-                className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold py-2 px-2 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg mr-10"
-              >
-                Friends
-              </Link> */}
-            </li>
-            
-              {isAuthenticated ? (
-                <>
-
-                  <li><AvatarMenu /></li>
-                
-                </>
-              ) : (
-                <LoginButton />
-              )}
-            
-
+            {isAuthenticated ? (
+              <>
+                <li>
+                  <Link
+                    to="/journey"
+                    className="text-teal-200 focus:text-white focus:rounded-full focus:bg-pink-500 hover:bg-pink-500 hover:text-white text-s font-semibold px-6 rounded-full transition duration-300 ease-in-out hover:drop-shadow-lg"
+                    data-testid="JourneyLi"
+                  >
+                    Journeys
+                  </Link>
+                </li>
+                <li>
+                  <AvatarMenu />
+                </li>
+              </>
+            ) : (
+              <LoginButton />
+            )}
           </ul>
-          
+
           <div className="md:hidden block py-4 px-6">
             <button
               onClick={() => setIsOpen(!isOpen)}

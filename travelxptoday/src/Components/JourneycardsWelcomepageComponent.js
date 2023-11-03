@@ -11,6 +11,7 @@ const JourneycardsWelcompage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { user, isAuthenticated, isLoading } = useAuth0();
+  
   useEffect(() => {
     fetch("http://127.0.0.1:5000/journey/all")
       .then((response) => {

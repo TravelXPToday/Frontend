@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import AppJourney from './Pages/AppJourney';
 import WelcomePage from './Pages/Welcomepage';
+import ProfilePage from './Pages/ProfilePage';
 import NavBar from './Components/NavbarComponent';
 import { ThemeProvider } from "@material-tailwind/react";
 import DailyMomentsPage from './Pages/DailyMomentsPage';
@@ -29,6 +30,7 @@ ReactDOM.render(
                 <Route path="/" element={<WelcomePage />} />
                 <Route path="/journey" element={<AppJourney />} />
                 <Route path="/journey/:id" element={<DailyMomentsPage />} />
+                <Route path='/profile' element={<ProfilePage/>} />
                 {/* <Route path='/traveler' element={<TravelerPage/>} /> */}
               </Routes>
             </main>
