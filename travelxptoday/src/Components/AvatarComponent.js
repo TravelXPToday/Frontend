@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { UserCircleIcon, ChevronDownIcon, Cog6ToothIcon, PowerIcon } from "@heroicons/react/24/solid";
 import { Menu, MenuHandler, MenuList, MenuItem, Avatar, Button, Typography } from "@material-tailwind/react";
-
+import { Link } from "react-router-dom";
 /**
  * Renders a menu with options for the user's avatar.
  * @returns {JSX.Element} The AvatarMenu component.
@@ -54,7 +54,9 @@ function AvatarMenu() {
                             className="font-normal"
                             color="inherit"
                         >
-                            Your Profile(mock)
+                            <Link to="/profile" data-testid="ProfileButton">
+                  Your profile
+                </Link>
                         </Typography>
                     </MenuItem>
                     <MenuItem

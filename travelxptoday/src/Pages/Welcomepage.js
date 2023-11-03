@@ -1,10 +1,16 @@
-import React from 'react';
+import React from "react";
 import { Link } from "react-router-dom";
 
-import bgImage from '../Assets/Image/Background.jpg';
-import JourneycardsWelcompage from '../Components/JourneycardsWelcomepageComponent';
-import Profile from '../Components/ProfileComponent';
-const WelcomePage = () => { 
+import bgImage from "../Assets/Image/Background.jpg";
+import JourneycardsWelcompage from "../Components/JourneycardsWelcomepageComponent";
+import Profile from "../Components/ProfileComponent";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "../Components/LoginButtonComponent";
+
+const WelcomePage = () => {
+  const { isAuthenticated } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
+
   return (
     <div className=" ">
       {/* Welkomstinhoud */}
@@ -27,27 +33,34 @@ const WelcomePage = () => {
                 Welcom to TravelXPToday!
               </h1>
               <p className="text-lg font-semibold mb-8">
-
-                Discover the beauty of the world, share your adventures and learn from other travelers.
+                Discover the beauty of the world, share your adventures and
+                learn from other travelers.
               </p>
             </div>
           </div>
 
-          <button
-            className="bg-pink-500 drop-shadow-lg mt-4 text-white hover:bg-white hover:text-pink-500 text-xl font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out"
-            
-          >
-            <Link to="/journey"
-            data-testid="JourneyButton"> Continue to your journeys </Link>
-          </button>
-          
+          {isAuthenticated ? (
+            <>
+              <button className="bg-pink-500 drop-shadow-lg mt-4 text-white hover:bg-white hover:text-pink-500 text-xl font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out">
+                <Link to="/journey" data-testid="JourneyButton">
+                  Continue to your journeys
+                </Link>
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => loginWithRedirect()}
+              className="bg-pink-500 drop-shadow-lg mt-4 text-white hover:bg-white hover:text-pink-500 text-xl font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out"
+            >
+              Login to continue to your journeys!
+            </button>
+          )}
         </div>
       </div>
 
       <JourneycardsWelcompage />
-      <Profile />
     </div>
   );
-}
+};
 
 export default WelcomePage;
