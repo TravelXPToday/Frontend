@@ -1,17 +1,67 @@
-import React from "react";
+import  { useEffect ,useState} from 'react';
 import { Link } from "react-router-dom";
-
-import bgImage from "../Assets/Image/Background.jpg";
-import JourneycardsWelcompage from "../Components/JourneycardsWelcomepageComponent";
-import Profile from "../Components/ProfileComponent";
 import { useAuth0 } from "@auth0/auth0-react";
-import LoginButton from "../Components/LoginButtonComponent";
+import bgImage from '../Assets/Image/Background.jpg';
+import JourneycardsWelcompage from '../Components/JourneycardsWelcomepageComponent';
 
-const WelcomePage = () => {
-  const { isAuthenticated } = useAuth0();
-  const { loginWithRedirect } = useAuth0();
+const WelcomePage = () => { 
+  document.title = "Welcome to TravelXPToday!";
+  const { user, isAuthenticated,loginWithRedirect } = useAuth0();
+  
+  useEffect(() => {
+    if (isAuthenticated) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch("http://127.0.0.1:5000/traveler/all");
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+  
+          const userEmailLower = user.email.toLowerCase().trim();
+          const userIsInDatabase = data.some(traveler => 
+            traveler.Email.toLowerCase().trim() === userEmailLower
+          );
+  
+          console.log(userIsInDatabase ? "user is in database" : "user is not in database");
+  
+          if (!userIsInDatabase) {
+            addUserToDatabase(user); 
+          }
+        } catch (error) {
+          console.error("Fetching error: ", error);
+        }
+      };
+  
+      fetchData();
+    }
+  }, [isAuthenticated, user]);
+  const addUserToDatabase = async (user) => {
+    try {
+      const response = await fetch("http://127.0.0.1:5000/traveler", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          Email: user.email,
+          Name: user.name,
+          Username: user.nickname
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+  
+      const result = await response.json();
+      console.log("User added to database:", result);
+    } catch (error) {
+      console.error("Error adding user to database:", error);
+    }
+  };
 
-  return (
+return (
     <div className=" ">
       {/* Welkomstinhoud */}
       <div
