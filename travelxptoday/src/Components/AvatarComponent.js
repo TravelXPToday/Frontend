@@ -21,7 +21,7 @@ function AvatarMenu() {
                         variant="text"
                         color="blue-gray"
                         className="flex items-center gap-1 rounded-full py-0.000001 pr-2 pl-0.5 lg:ml-auto"
-                        data-testid="menu-button"
+                        
                     >
                         <Avatar
                             variant="circular"
@@ -41,12 +41,13 @@ function AvatarMenu() {
                     <MenuItem
                         onClick={closeMenu}
                         className="items-center gap-2 flex flex-row rounded 
-                        hover:bg-teal-500 focus:bg-teal-500/10 active:bg-teal-500/10
+                        hover:bg-teal-500 focus:bg-teal-500 active:bg-teal-500
                          hover:text-white focus:text-white active:text-white" 
                     >
                         {React.createElement(UserCircleIcon, {
-                            className: `h-4 w-4`,
+                            className: `h-4 w-4 `,
                             strokeWidth: 2,
+                            
                         })}
                         <Typography
                             as="span"
@@ -60,7 +61,7 @@ function AvatarMenu() {
                     <MenuItem
                         onClick={closeMenu}
                         className="items-center gap-2 flex flex-row rounded 
-                        hover:bg-teal-500 focus:bg-teal-500/10 active:bg-teal-500/10
+                        hover:bg-teal-500 focus:bg-teal-500 active:bg-teal-500
                          hover:text-white focus:text-white active:text-white "              
                     >
                         {React.createElement(Cog6ToothIcon, {
@@ -83,7 +84,8 @@ function AvatarMenu() {
                             logout({ logoutParams: { returnTo: window.location.origin } });
                         }}
                         className="flex items-center gap-2  flex-row rounded 
-                        hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                        hover:bg-pink-500 focus:bg-pink-500 active:bg-pink-500
+                        hover:text-white focus:text-white active:text-white "
                     >
                         {React.createElement(PowerIcon, {
                             className: `h-4 w-4`,
