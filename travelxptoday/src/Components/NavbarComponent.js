@@ -13,7 +13,7 @@ const NavBar = () => {
   };
 
   const [text] = useTypewriter({
-    words: (isAuthenticated ? [`Welcome ${user.name}!`, `Where is ${user.name} today?`, `${user.name}!!`, "“To Travel is to Live.”"] : 
+    words: (isAuthenticated ? [`Welcome ${user.name}!`, `Where is ${user.name} going today?`, `${user.name}, TRAVELLL!!`, "“To Travel is to Live.”"] : 
     ["TravelXPToday", "Where are you going today?", "TravelXPToday", "Adventure!!", "TravelXPToday", "“To Travel is to Live.”"]),
 
     loop: true,
