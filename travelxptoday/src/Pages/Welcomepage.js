@@ -59,7 +59,6 @@ const WelcomePage = () => {
         },
         body: JSON.stringify({
           Email: user.email,
-          Name: user.name,
           Username: user.nickname,
           ID: user.sub
         })

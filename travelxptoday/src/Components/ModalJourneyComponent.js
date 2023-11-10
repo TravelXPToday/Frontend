@@ -291,7 +291,7 @@ function ModalJourneyComponent({ refresh, onSubmit, useInitialData = false }) {
           <ReactSelect
             value={travelers.find(t => t.Email === selectedTraveler)}
             onChange={(option) => setSelectedTraveler(option.Email)}
-            getOptionLabel={(option) => option.Name}
+            getOptionLabel={(option) => option.Username}
             getOptionValue={(option) => option.Email}
             options={travelers}
             placeholder="Select Traveler"
@@ -303,7 +303,7 @@ function ModalJourneyComponent({ refresh, onSubmit, useInitialData = false }) {
             if (travelerToAdd && !formData.travelers.some(t => t.email === travelerToAdd.Email)) {
               setFormData({
                 ...formData,
-                travelers: [...formData.travelers, { name: travelerToAdd.Name, email: travelerToAdd.Email }]
+                travelers: [...formData.travelers, { username: travelerToAdd.Username, email: travelerToAdd.Email }]
               });
             }
           }}
@@ -318,7 +318,7 @@ function ModalJourneyComponent({ refresh, onSubmit, useInitialData = false }) {
                   className='focus:bg-teal-100'
                   size="lg"
                   label={`Traveler ${index + 1}`}
-                  value={traveler.name}
+                  value={traveler.username}
                   onChange={(e) => handleTravelerChange(index, e.target.value)}
                   required
                   data-testid={`traveler-${index}`}
