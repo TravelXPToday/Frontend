@@ -1,64 +1,93 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-    Input,
-    Button,
-    Typography,
-    Textarea,
+  Input,
+  Button,
+  Typography,
+  Textarea,
 } from "@material-tailwind/react";
-
-function ModalJourneyComponent({  refresh, onSubmit }) {
-    const [loading, setLoading] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        startDate: '',
-        endDate: '',
-        destination: '',
-        startLocation: '',
-        description: '',
-        travelers: [
-          {
-            "name": "Art",
-            "email": "test@gmail"
-          },
-          {
-            "name": "Jelle",
-            "email": "Test@gmail.com"
-          }
-        ], 
-        transportation: '',
-        days: [
-          {
-              day: '1', 
-              dailyMoments: [
-                  ['moment1A', 'moment1B'], 
-                  ['moment2A', 'moment2B']
-              ]
-          },
-          {
-              day: '2', 
-              dailyMoments: [
-                  ['moment3A', 'moment3B'], 
-                  ['moment4A', 'moment4B']
-              ]
-          },
-         
-      ],
-      image_url:"https://picsum.photos/480/300"
-      
-    });
-
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setFormData(prev => ({ ...prev, [name]: value }));
-    };  
-  
-    const handleTravelerChange = (index, value) => {
-      const newTravelers = [...formData.travelers];
-      newTravelers[index].name = value;  
-      setFormData(prev => ({ ...prev, travelers: newTravelers }));
+import { API_BASE_URL } from '../Config';
+import ReactSelect from 'react-select';
+function ModalJourneyComponent({ refresh, onSubmit, useInitialData = false }) {
+  const [travelers, setTravelers] = useState([]);
+  const [selectedTraveler, setSelectedTraveler] = useState('');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/traveler/all`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        setTravelers(data);
+        if (data.length > 0) {
+          setSelectedTraveler(data[0].Email);
+        }
+      } catch (error) {
+        console.error("Fetching error: ", error);
+      }
     };
-    
+    fetchData();
+  }, []);
+  const [loading, setLoading] = useState(false);
+
+  // const initialTravelers = useInitialData ? [
+  //   {
+  //     "name": "Art",
+  //     "email": "test@gmail"
+  //   },
+  //   {
+  //     "name": "Jelle",
+  //     "email": "Test@gmail.com"
+  //   }
+  // ] : [];
+  const [formData, setFormData] = useState({
+    name: '',
+    startDate: '',
+    endDate: '',
+    destination: '',
+    startLocation: '',
+    description: '',
+    travelers: [],
+    transportation: '',
+    days: [
+      {
+        day: '1',
+        dailyMoments: [
+          ['moment1A', 'moment1B'],
+          ['moment2A', 'moment2B']
+        ]
+      },
+      {
+        day: '2',
+        dailyMoments: [
+          ['moment3A', 'moment3B'],
+          ['moment4A', 'moment4B']
+        ]
+      },
+
+    ],
+    image_url: "https://picsum.photos/480/300"
+
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleTravelerChange = (index, value) => {
+    const newTravelers = [...formData.travelers];
+    newTravelers[index].name = value;
+    setFormData(prev => ({ ...prev, travelers: newTravelers }));
+  };
+  const handleRemoveTraveler = (emailToRemove) => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      travelers: prevFormData.travelers.filter(traveler => traveler.email !== emailToRemove)
+    }));
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -129,7 +158,7 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
 
 
     if (formData.startDate && formData.endDate && formData.destination && formData.startLocation && formData.description && formData.travelers && formData.transportation) {
-      
+
 
       try {
         const response = await fetch('http://127.0.0.1:5000/journey', {
@@ -144,7 +173,7 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
           throw new Error('Network response was not ok ' + response.statusText);
         }
 
-        
+
         refresh();
       } catch (error) {
 
@@ -180,7 +209,7 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               size="lg"
               label="Name"
               name="name"
-              onChange={handleInputChange}              
+              onChange={handleInputChange}
               data-testid="name"
               required
             />
@@ -194,11 +223,11 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               label="Start Date"
               name="startDate"
               onChange={handleInputChange}
-              
+
               required
-              
+
               data-testid="startDate"
-              
+
             />
             <Input
               className='focus:bg-teal-100 '
@@ -208,7 +237,7 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               name="endDate"
               onChange={handleInputChange}
               required
-              
+
               data-testid="endDate"
             />
           </div>
@@ -219,9 +248,9 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               label="Start Location"
               name="startLocation"
               onChange={handleInputChange}
-                  required        
+              required
               data-testid="startLocation"
-              
+
             />
             <Input
               className='focus:bg-teal-100 '
@@ -229,7 +258,7 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               label="Destination"
               name="destination"
               onChange={handleInputChange}
-              
+
               required
               data-testid="destination"
             />
@@ -252,41 +281,76 @@ function ModalJourneyComponent({  refresh, onSubmit }) {
               name="description"
               onChange={handleInputChange}
               data-testid="description"
-              
-              
+
+
             />
           </div>
         </div>
 
-        <div className="mb-4 flex flex-wrap justify-between">
-          {formData.travelers.map((traveler, index) => (
-            <div className='flex  gap-x-2 flex-wrap items-center md:w-full'>
-              <Input
-                key={index}
-                className='focus:bg-teal-100'
-                size="lg"
-                label={`Traveler ${index + 1}`}
-                value={traveler.name}  
-                onChange={(e) => handleTravelerChange(index, e.target.value)}
-                required
-                data-testid={`traveler-${index}`}
-              />
-            </div>
-          ))}
+        <div className='flex flex-col w-full'>
+          <ReactSelect
+            value={travelers.find(t => t.Email === selectedTraveler)}
+            onChange={(option) => setSelectedTraveler(option.Email)}
+            getOptionLabel={(option) => option.Username}
+            getOptionValue={(option) => option.Email}
+            options={travelers}
+            placeholder="Select Traveler"
+            className="text-gray-700 leading-tight"
+          />
+
+          <button onClick={() => {
+            const travelerToAdd = travelers.find(t => t.Email === selectedTraveler);
+            if (travelerToAdd && !formData.travelers.some(t => t.email === travelerToAdd.Email)) {
+              setFormData({
+                ...formData,
+                travelers: [...formData.travelers, { username: travelerToAdd.Username, email: travelerToAdd.Email }]
+              });
+            }
+          }}
+            className="mt-6 mb-2 bg-pink-500 rounded-full text-white p-2 hover:border-1 hover:border-pink-500 hover:text-pink-500 hover:bg-teal-900"
+            type='button'
+          >Add Traveler</button>
+
+          {formData.travelers && formData.travelers.length > 0 ? (
+            formData.travelers.map((traveler, index) => (
+              <div key={traveler.email} className="flex gap-x-2 flex-row items-center md:w-full mb-2">
+                <Input
+                  className='focus:bg-teal-100'
+                  size="lg"
+                  label={`Traveler ${index + 1}`}
+                  value={traveler.username}
+                  onChange={(e) => handleTravelerChange(index, e.target.value)}
+                  required
+                  data-testid={`traveler-${index}`}
+                />
+                <button
+                  type='button'
+                  className="bg-teal-500 rounded-full text-white p-1 hover:bg-pink-500 px-3 "
+                  onClick={() => handleRemoveTraveler(traveler.email)}
+                >
+                  X
+                </button>
+              </div>
+            ))
+          ) : null}
         </div>
 
-        <Button 
+
+
+
+
+        <Button
           type="submit"
           className="  mt-6 bg-pink-500 rounded-full text-white p-2 hover:border-1 hover:border-pink-500 hover:text-white hover:bg-teal-900 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
           // group-invalid:pointer-events-none group-invalid:opacity-30
           fullWidth
-          
+
         >
           Create Journey
         </Button>
       </form>
     </div>
-    
+
 
   );
 }

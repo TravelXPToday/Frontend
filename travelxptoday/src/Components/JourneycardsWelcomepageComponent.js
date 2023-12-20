@@ -4,13 +4,15 @@ Component for displaying 3 most recent journeys.
 
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from '../Config';
 const JourneycardsWelcompage = () => {
   const [journeyData, setJourneyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/journey/all")
+    fetch(`${API_BASE_URL}/journey/all`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

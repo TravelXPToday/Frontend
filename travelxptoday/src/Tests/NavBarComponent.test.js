@@ -35,7 +35,7 @@ it("Navbar welcome button should navigate to the welcome page when clicked", asy
     fireEvent.click(homeButton);
 
     await waitFor(() => {
-        expect(window.location.pathname).toBe("/welcomepage");
+        expect(window.location.pathname).toBe("/");
     });
 })
 it("Navbar typewriter button should navigate to the welcome page when clicked", async () => {
@@ -46,7 +46,7 @@ it("Navbar typewriter button should navigate to the welcome page when clicked", 
     fireEvent.click(homeButton);
 
     await waitFor(() => {
-        expect(window.location.pathname).toBe("/welcomepage");
+        expect(window.location.pathname).toBe("/");
     });
 })
 

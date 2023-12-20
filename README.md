@@ -38,7 +38,7 @@ To run the Flask app, run the following commands in the terminal:
 ```bash
 cd API
 pip install -r requirements.txt
-python app.py
+python api.py
 ```
 ## How we use FetchAPI
 

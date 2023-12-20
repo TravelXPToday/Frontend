@@ -1,9 +1,9 @@
-import DailyMomentsComponent from "../Components/DailyMomentsComponent";
+import DailyMoments from "../Components/DailyMomentsComponent";
 
 const DailyMomentsPage = () => {
   return (
     <div className=" ">
-      <DailyMomentsComponent />
+      <DailyMoments/>
     </div>
   );
 };
