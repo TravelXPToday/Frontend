@@ -1,14 +1,8 @@
-name: Running Create React App and Tests
+name: Run Create React App and Tests
 
 on:
-  push:
-    branches:
-      - main
-      - DEV
-  pull_request:
-    branches:
-      - main
-      - DEV
+  schedule:
+    - cron: '0 0 * * *' 
 
 jobs:
   build:
