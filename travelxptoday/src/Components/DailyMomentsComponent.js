@@ -11,7 +11,7 @@ import { Carousel, IconButton  } from "@material-tailwind/react";
 import ScrollComponent from "./ScrollComponent";
 import moment from "moment";
 
-const DailyMomentsComponent = () => {
+const DailyMoments = () => {
   const [journeyData, setJourneyData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -222,4 +222,4 @@ const DailyMomentsComponent = () => {
   );
 };
 
-export default DailyMomentsComponent;
+export default DailyMoments;
